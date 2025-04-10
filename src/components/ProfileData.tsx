@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { FaGithub, FaLinkedin, FaExternalLinkAlt, FaCode } from "react-icons/fa";
 import { skillColors } from "@/data/skillColors";
-import { translations } from "@/i18n/translations";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ProfileDataProps {
   githubUrl: string;
@@ -27,8 +27,7 @@ interface ProfileInfo {
 }
 
 export function ProfileData({ githubUrl, linkedinUrl }: ProfileDataProps) {
-  const [language, setLanguage] = useState<"pt" | "en">("pt");
-  const t = translations[language];
+  const { t, language } = useLanguage();
 
   const [profileInfo, setProfileInfo] = useState<ProfileInfo>({
     name: "Gabriel Leite Araújo",

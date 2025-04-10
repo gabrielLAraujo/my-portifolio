@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { FaGithub, FaExternalLinkAlt, FaTimes } from "react-icons/fa";
 import Link from "next/link";
+import Image from "next/image";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ProjectPreviewProps {
@@ -23,11 +24,13 @@ export function ProjectPreview({ projectUrl, githubUrl, title, onClose, isModal 
   const previewContent = (
     <>
       <div className="relative w-full aspect-[16/9] bg-gray-100 dark:bg-gray-800 rounded-t-xl overflow-hidden">
-        <iframe
+        <Image
           src={previewUrl}
-          className="w-full h-full border-none scale-100"
-          onLoad={() => setIsLoading(false)}
-          loading="lazy"
+          alt={`Preview do projeto ${title}`}
+          fill
+          className="object-cover"
+          onLoadingComplete={() => setIsLoading(false)}
+          priority={isModal}
         />
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center">

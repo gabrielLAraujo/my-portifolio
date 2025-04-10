@@ -1,116 +1,106 @@
 "use client";
 
-import { useState } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function ContactForm() {
   const { t } = useLanguage();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus('sending');
+    setIsLoading(true);
+    setSuccess(false);
+    setErrorMessage("");
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+    };
 
     try {
-      const response = await fetch('api/contact', {
-        method: 'POST',
+      const response = await fetch("/api/contact", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          to: 'bfrauches@gmail.com',
-          from: formData.email,
-          subject: `Contato do Portfólio - ${formData.name}`,
-          message: formData.message
-        }),
+        body: JSON.stringify(data),
       });
 
-      if (response.ok) {
-        setStatus('success');
-        setFormData({ name: '', email: '', message: '' });
-      } else {
-        setStatus('error');
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Erro ao enviar mensagem");
       }
-    } catch (error) {
-      setStatus('error');
+
+      setSuccess(true);
+      e.currentTarget.reset();
+    } catch (err) {
+      setErrorMessage(err instanceof Error ? err.message : "Erro ao enviar mensagem");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label htmlFor="name" className="block text-sm font-medium mb-1">
           {t.name}
         </label>
         <input
           type="text"
           id="name"
-          value={formData.name}
-          onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+          name="name"
           required
-          className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
-            bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100
-            focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+          className="w-full px-4 py-2 rounded-lg border dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 outline-none transition-shadow"
         />
       </div>
-
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label htmlFor="email" className="block text-sm font-medium mb-1">
           {t.email}
         </label>
         <input
           type="email"
           id="email"
-          value={formData.email}
-          onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+          name="email"
           required
-          className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
-            bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100
-            focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+          className="w-full px-4 py-2 rounded-lg border dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 outline-none transition-shadow"
         />
       </div>
-
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label htmlFor="message" className="block text-sm font-medium mb-1">
           {t.message}
         </label>
         <textarea
           id="message"
-          value={formData.message}
-          onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
+          name="message"
           required
           rows={4}
-          className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
-            bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100
-            focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+          className="w-full px-4 py-2 rounded-lg border dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 outline-none transition-shadow resize-none"
         />
       </div>
-
+      
       <button
         type="submit"
-        disabled={status === 'sending'}
-        className={`w-full px-6 py-3 rounded-lg font-medium text-white transition-colors
-          ${status === 'sending' 
-            ? 'bg-gray-400 cursor-not-allowed' 
-            : 'bg-blue-500 hover:bg-blue-600'}`}
+        disabled={isLoading}
+        className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {status === 'sending' ? t.sending : t.send}
+        {isLoading ? t.sending : t.send}
       </button>
 
-      {status === 'success' && (
+      {success && (
         <p className="text-green-600 dark:text-green-400 text-sm mt-2">
           {t.messageSent}
         </p>
       )}
 
-      {status === 'error' && (
+      {errorMessage && (
         <p className="text-red-600 dark:text-red-400 text-sm mt-2">
-          {t.messageError}
+          {errorMessage}
         </p>
       )}
     </form>
