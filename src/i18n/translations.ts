@@ -1,0 +1,40 @@
+export const translations = {
+  pt: {
+    about: "Sobre",
+    projects: "Projetos",
+    contact: "Contato",
+    skills: "Habilidades",
+    viewCode: "Ver código",
+    viewPreview: "Ver preview",
+    interested: "Interessado em trabalhar juntos? Entre em contato através do formulário ou diretamente por email!",
+    email: "Email",
+    location: "Localização",
+    portfolio: "Meu Portfólio",
+    name: "Nome",
+    message: "Mensagem",
+    send: "Enviar mensagem",
+    sending: "Enviando...",
+    messageSent: "Mensagem enviada com sucesso!",
+    messageError: "Erro ao enviar mensagem. Tente novamente.",
+    keyFeatures: "Recursos Principais"
+  },
+  en: {
+    about: "About",
+    projects: "Projects",
+    contact: "Contact",
+    skills: "Skills",
+    viewCode: "View code",
+    viewPreview: "View preview",
+    interested: "Interested in working together? Contact me through the form or directly by email!",
+    email: "Email",
+    location: "Location",
+    portfolio: "My Portfolio",
+    name: "Name",
+    message: "Message",
+    send: "Send message",
+    sending: "Sending...",
+    messageSent: "Message sent successfully!",
+    messageError: "Error sending message. Please try again.",
+    keyFeatures: "Key Features"
+  }
+}; 

@@ -1,15 +1,66 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background-light text-text-primary-light dark:bg-background-dark dark:text-text-primary-dark;
+    @apply transition-colors duration-300;
+  }
+}
+
+@layer components {
+  .theme-transition {
+    @apply transition-colors duration-300;
+  }
+
+  .card {
+    @apply bg-surface-light dark:bg-surface-dark;
+    @apply border border-border-light dark:border-border-dark;
+    @apply rounded-lg shadow-sm;
+    @apply transition-all duration-300;
+  }
+
+  .heading-1 {
+    @apply text-4xl font-bold text-text-primary-light dark:text-text-primary-dark;
+  }
+
+  .heading-2 {
+    @apply text-3xl font-bold text-text-primary-light dark:text-text-primary-dark;
+  }
+
+  .heading-3 {
+    @apply text-2xl font-bold text-text-primary-light dark:text-text-primary-dark;
+  }
+
+  .text-body {
+    @apply text-text-secondary-light dark:text-text-secondary-dark;
+  }
+
+  .link {
+    @apply text-accent-light dark:text-accent-dark hover:underline;
+  }
+
+  .button-primary {
+    @apply bg-primary-500 text-white hover:bg-primary-600;
+    @apply dark:bg-primary-400 dark:hover:bg-primary-500;
+    @apply rounded-lg px-4 py-2 font-medium;
+    @apply transition-colors duration-300;
+  }
+
+  .button-secondary {
+    @apply bg-surface-light dark:bg-surface-dark;
+    @apply text-text-primary-light dark:text-text-primary-dark;
+    @apply border border-border-light dark:border-border-dark;
+    @apply hover:bg-gray-100 dark:hover:bg-gray-800;
+    @apply rounded-lg px-4 py-2 font-medium;
+    @apply transition-colors duration-300;
+  }
+}
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,4 +74,21 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
+
+.theme-transition {
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Estilos para o tema claro */
+:root[class="light"] {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+/* Estilos para o tema escuro */
+:root[class="dark"] {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+} 
