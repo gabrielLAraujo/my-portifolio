@@ -2,101 +2,107 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { FaGithub, FaExternalLinkAlt, FaTimes } from "react-icons/fa";
-import Link from "next/link";
+import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import Image from "next/image";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ProjectPreviewProps {
-  projectUrl: string;
-  githubUrl: string;
   title: string;
-  onClose?: () => void;
-  isModal?: boolean;
+  description: string;
+  image?: string;
+  githubUrl: string;
+  liveUrl?: string;
+  technologies: string[];
 }
 
-export function ProjectPreview({ projectUrl, githubUrl, title, onClose, isModal = false }: ProjectPreviewProps) {
+export function ProjectPreview({
+  title,
+  description,
+  image,
+  githubUrl,
+  liveUrl,
+  technologies,
+}: ProjectPreviewProps) {
   const { t } = useLanguage();
   const [isLoading, setIsLoading] = useState(true);
 
-  const previewUrl = `https://api.microlink.io?url=${encodeURIComponent(projectUrl)}&screenshot=true&meta=false&embed=screenshot.url&scale=0.75&waitUntil=networkidle2`;
+  const previewUrl = image || `https://api.microlink.io?url=${encodeURIComponent(liveUrl || githubUrl)}&screenshot=true&meta=false&embed=screenshot.url`;
+  const projectUrl = liveUrl || githubUrl;
 
-  const previewContent = (
-    <>
-      <div className="relative w-full aspect-[16/9] bg-gray-100 dark:bg-gray-800 rounded-t-xl overflow-hidden">
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+    >
+      <a
+        href={projectUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block relative h-48 w-full bg-gray-100 dark:bg-gray-700 group cursor-pointer"
+      >
         <Image
           src={previewUrl}
-          alt={`Preview do projeto ${title}`}
+          alt={title}
           fill
-          className="object-cover"
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
           onLoadingComplete={() => setIsLoading(false)}
-          priority={isModal}
         />
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
           </div>
         )}
-      </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-6">
+        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          <span className="text-white font-medium">{t("viewProject")}</span>
+        </div>
+      </a>
+      
+      <div className="p-6">
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+          {title}
+        </h3>
+        
+        <p className="text-gray-600 dark:text-gray-300 mb-4">
+          {description}
+        </p>
+        
+        <div className="flex flex-wrap gap-2 mb-4">
+          {technologies.map((tech) => (
+            <span
+              key={tech}
+              className="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+        
         <div className="flex gap-4">
-          <Link
-            href={projectUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-3 bg-white/10 backdrop-blur-sm rounded-full hover:bg-white/20 transition-colors"
-            title={t.viewProject}
-          >
-            <FaExternalLinkAlt className="text-white text-xl" />
-          </Link>
-          <Link
+          <a
             href={githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-3 bg-white/10 backdrop-blur-sm rounded-full hover:bg-white/20 transition-colors"
-            title="GitHub"
+            className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
           >
-            <FaGithub className="text-white text-xl" />
-          </Link>
+            <FaGithub className="text-xl" />
+            <span>{t("viewCode")}</span>
+          </a>
+          
+          {liveUrl && (
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+            >
+              <FaExternalLinkAlt className="text-xl" />
+              <span>{t("viewLive")}</span>
+            </a>
+          )}
         </div>
       </div>
-    </>
-  );
-
-  if (isModal) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-        onClick={onClose}
-      >
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-          className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl w-full max-w-5xl overflow-hidden"
-          onClick={e => e.stopPropagation()}
-        >
-          <div className="flex items-center justify-between p-4 border-b dark:border-gray-800">
-            <h3 className="text-xl font-semibold">{title}</h3>
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
-            >
-              <FaTimes className="text-xl" />
-            </button>
-          </div>
-          {previewContent}
-        </motion.div>
-      </motion.div>
-    );
-  }
-
-  return (
-    <div className="relative group">
-      {previewContent}
-    </div>
+    </motion.div>
   );
 } 

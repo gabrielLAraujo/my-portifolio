@@ -17,7 +17,7 @@ export function Header() {
           transition={{ duration: 0.5 }}
           className="text-xl font-bold"
         >
-          {t.portfolio}
+          {t("portfolio")}
         </motion.h1>
         <div className="flex items-center space-x-6">
           <motion.a 
@@ -27,7 +27,7 @@ export function Header() {
             whileTap={{ scale: 0.95 }}
           >
             <FaUser className="text-lg" />
-            <span className="hidden sm:inline">{t.about}</span>
+            <span className="hidden sm:inline">{t("about")}</span>
           </motion.a>
           <motion.a 
             href="#projetos" 
@@ -36,7 +36,7 @@ export function Header() {
             whileTap={{ scale: 0.95 }}
           >
             <FaCode className="text-lg" />
-            <span className="hidden sm:inline">{t.projects}</span>
+            <span className="hidden sm:inline">{t("projects")}</span>
           </motion.a>
           <motion.a 
             href="#contato" 
@@ -45,7 +45,7 @@ export function Header() {
             whileTap={{ scale: 0.95 }}
           >
             <FaEnvelopeOpenText className="text-lg" />
-            <span className="hidden sm:inline">{t.contact}</span>
+            <span className="hidden sm:inline">{t("contact")}</span>
           </motion.a>
           <ControlButtons />
         </div>

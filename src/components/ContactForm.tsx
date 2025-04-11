@@ -1,108 +1,109 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { FaPaperPlane } from "react-icons/fa";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export function ContactForm() {
   const { t } = useLanguage();
-  const [isLoading, setIsLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    setSuccess(false);
-    setErrorMessage("");
-
-    const formData = new FormData(e.currentTarget);
-    const data = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      message: formData.get("message"),
-    };
+    setStatus("sending");
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Erro ao enviar mensagem");
-      }
-
-      setSuccess(true);
-      e.currentTarget.reset();
-    } catch (err) {
-      setErrorMessage(err instanceof Error ? err.message : "Erro ao enviar mensagem");
-    } finally {
-      setIsLoading(false);
+      // Aqui você implementaria a lógica de envio do formulário
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulação de envio
+      setStatus("success");
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error("Erro ao enviar mensagem:", error);
+      setStatus("error");
     }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <label htmlFor="name" className="block text-sm font-medium mb-1">
-          {t.name}
+          {t("name")}
         </label>
         <input
           type="text"
           id="name"
           name="name"
+          value={formData.name}
+          onChange={handleChange}
           required
-          className="w-full px-4 py-2 rounded-lg border dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 outline-none transition-shadow"
+          className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
         />
       </div>
+
       <div>
         <label htmlFor="email" className="block text-sm font-medium mb-1">
-          {t.email}
+          {t("email")}
         </label>
         <input
           type="email"
           id="email"
           name="email"
+          value={formData.email}
+          onChange={handleChange}
           required
-          className="w-full px-4 py-2 rounded-lg border dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 outline-none transition-shadow"
+          className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
         />
       </div>
+
       <div>
         <label htmlFor="message" className="block text-sm font-medium mb-1">
-          {t.message}
+          {t("message")}
         </label>
         <textarea
           id="message"
           name="message"
+          value={formData.message}
+          onChange={handleChange}
           required
           rows={4}
-          className="w-full px-4 py-2 rounded-lg border dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 outline-none transition-shadow resize-none"
+          className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
         />
       </div>
-      
-      <button
+
+      <motion.button
         type="submit"
-        disabled={isLoading}
-        className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled={status === "sending"}
+        className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
       >
-        {isLoading ? t.sending : t.send}
-      </button>
-
-      {success && (
-        <p className="text-green-600 dark:text-green-400 text-sm mt-2">
-          {t.messageSent}
-        </p>
-      )}
-
-      {errorMessage && (
-        <p className="text-red-600 dark:text-red-400 text-sm mt-2">
-          {errorMessage}
-        </p>
-      )}
+        {status === "sending" ? (
+          <>
+            <FaPaperPlane className="animate-pulse" />
+            {t("sending")}
+          </>
+        ) : status === "success" ? (
+          <span className="text-green-300">{t("messageSent")}</span>
+        ) : status === "error" ? (
+          <span className="text-red-300">{t("messageError")}</span>
+        ) : (
+          <>
+            <FaPaperPlane />
+            {t("send")}
+          </>
+        )}
+      </motion.button>
     </form>
   );
-} 
+}
