@@ -7,6 +7,7 @@ import { ContactSection } from "@/components/ContactSection";
 import { AboutSection } from "@/components/AboutSection";
 import { SectionTransition } from "@/components/SectionTransition";
 import { FloatingControls } from "@/components/FloatingControls";
+import { contactInfo } from "@/config/contact";
 
 export default function Home() {
   return (
@@ -21,10 +22,10 @@ export default function Home() {
       <ProjectsSection />
       <SectionTransition />
       <ContactSection 
-        githubUrl="https://github.com/gabrielLAraujo"
-        linkedinUrl="https://linkedin.com/in/seu-perfil"
-        email="seu.email@exemplo.com"
-        phone="+55 11 99999-9999"
+        githubUrl={contactInfo.github}
+        linkedinUrl={contactInfo.linkedin}
+        email={contactInfo.email}
+        phone={contactInfo.phone}
       />
     </main>
   );

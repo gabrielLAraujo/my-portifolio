@@ -5,7 +5,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { 
   FaReact, FaNodeJs, FaDocker, FaGitAlt,
   FaHtml5, FaCss3Alt, FaJs, FaDatabase,
-  FaServer, FaCloud, FaCode, FaTools
+  FaCode,
+  FaPython, FaVuejs, FaAws, FaCogs, FaProjectDiagram, FaSitemap, FaClipboardList, FaUsers, FaFileCode
 } from "react-icons/fa";
 
 interface Skill {
@@ -17,27 +18,29 @@ interface Skill {
 const skills: Skill[] = [
   // Frontend
   { name: "React", icon: FaReact, category: "frontend" },
+  { name: "JavaScript", icon: FaJs, category: "frontend" },
+  { name: "TypeScript", icon: FaFileCode, category: "frontend" },
+  { name: "Vue.js", icon: FaVuejs, category: "frontend" },
   { name: "HTML5", icon: FaHtml5, category: "frontend" },
   { name: "CSS3", icon: FaCss3Alt, category: "frontend" },
-  { name: "JavaScript", icon: FaJs, category: "frontend" },
-  
+
   // Backend
   { name: "Node.js", icon: FaNodeJs, category: "backend" },
-  { name: "Express", icon: FaServer, category: "backend" },
+  { name: "C#", icon: FaCode, category: "backend" },
+  { name: "Python", icon: FaPython, category: "backend" },
   { name: "MongoDB", icon: FaDatabase, category: "backend" },
   { name: "PostgreSQL", icon: FaDatabase, category: "backend" },
   
   // DevOps
   { name: "Docker", icon: FaDocker, category: "devops" },
   { name: "Git", icon: FaGitAlt, category: "devops" },
-  { name: "AWS", icon: FaCloud, category: "devops" },
-  { name: "CI/CD", icon: FaTools, category: "devops" },
+  { name: "AWS", icon: FaAws, category: "devops" },
+  { name: "CI/CD", icon: FaCogs, category: "devops" },
   
-  // Outros
-  { name: "TypeScript", icon: FaCode, category: "other" },
-  { name: "REST APIs", icon: FaCode, category: "other" },
-  { name: "GraphQL", icon: FaCode, category: "other" },
-  { name: "Testes", icon: FaCode, category: "other" },
+  { name: "REST", icon: FaProjectDiagram, category: "other" },
+  { name: "GraphQL", icon: FaSitemap, category: "other" },
+  { name: "Kanban", icon: FaClipboardList, category: "other" },
+  { name: "Scrum", icon: FaUsers, category: "other" },
 ];
 
 const categories = {

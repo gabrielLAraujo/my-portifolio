@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import Image from "next/image";
+import { contactInfo } from "@/config/contact";
 
 export function AboutSection() {
   const { t } = useLanguage();
@@ -67,7 +68,7 @@ export function AboutSection() {
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 bg-primary rounded-full" />
-                <span className="text-gray-700 dark:text-gray-300">{t("location")}</span>
+                <span className="text-gray-700 dark:text-gray-300">{contactInfo.location}</span>
               </div>
             </div>
           </motion.div>
