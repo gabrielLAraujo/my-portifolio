@@ -21,16 +21,15 @@ export function HeroSection() {
       ];
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 -z-10" />
-      
+    <section className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-white dark:bg-blue-950 text-blue-900 dark:text-blue-100">
+      <div className="absolute inset-0 -z-10" />
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="text-center px-4"
       >
-        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+        <h1 className="text-5xl md:text-6xl font-bold text-blue-900 dark:text-blue-100 mb-6">
           Gabriel Leite Araújo
         </h1>
 
@@ -40,17 +39,6 @@ export function HeroSection() {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          <motion.div
-            className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
-            animate={{
-              rotate: 360
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          />
           <div className="absolute inset-2 rounded-full overflow-hidden">
             <Image
               src="/profile.jpg"
@@ -62,16 +50,16 @@ export function HeroSection() {
           </div>
         </motion.div>
 
-        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+        <p className="text-xl md:text-2xl text-blue-700 dark:text-blue-200 mb-8 max-w-2xl mx-auto">
           {t("heroTitle")}
         </p>
-        <p className="text-lg text-gray-500 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+        <p className="text-lg text-blue-600 dark:text-blue-400 mb-8 max-w-2xl mx-auto">
           {t("heroSubtitle")}
         </p>
         
         <motion.a
           href="#projects"
-          className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+          className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
@@ -93,11 +81,11 @@ export function HeroSection() {
                 <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
                   {item.year}
                 </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">
+                <div className="text-sm text-blue-700 dark:text-blue-200">
                   {item.text}
                 </div>
                 {index < timeline.length - 1 && (
-                  <div className="hidden md:block w-24 h-0.5 bg-gray-300 dark:bg-gray-700 mx-auto my-2" />
+                  <div className="hidden md:block w-24 h-0.5 bg-blue-200 dark:bg-blue-800 mx-auto my-2" />
                 )}
               </div>
             ))}

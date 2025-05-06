@@ -27,6 +27,6 @@ export default function Home() {
         email={contactInfo.email}
         phone={contactInfo.phone}
       />
-    </main>
+      </main>
   );
 }

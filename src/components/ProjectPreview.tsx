@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import Image from "next/image";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -34,37 +33,37 @@ export function ProjectPreview({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+      className="bg-blue-50 dark:bg-blue-900 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full text-blue-900 dark:text-blue-100"
     >
       <a
         href={projectUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="block relative h-48 w-full bg-gray-100 dark:bg-gray-700 group cursor-pointer"
+        className="block relative h-48 w-full bg-blue-100 dark:bg-blue-800 group cursor-pointer"
       >
         <Image
           src={previewUrl}
           alt={title}
           fill
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          className="object-cover transition-transform duration-300 group-hover:scale-105 rounded-t-xl"
           onLoadingComplete={() => setIsLoading(false)}
         />
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+            <div className="w-8 h-8 border-4 border-blue-400 border-t-transparent rounded-full animate-spin" />
           </div>
         )}
-        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-          <span className="text-white font-medium">{t("viewProject")}</span>
+        <div className="absolute inset-0 bg-white/50 dark:bg-blue-900/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          <span className="text-blue-900 dark:text-blue-100 font-medium">{t("viewProject")}</span>
         </div>
       </a>
       
-      <div className="p-6">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+      <div className="p-6 flex flex-col flex-1">
+        <h3 className="text-xl font-bold text-blue-600 dark:text-blue-400 mb-2">
           {title}
         </h3>
         
-        <p className="text-gray-600 dark:text-gray-300 mb-4">
+        <p className="mb-4 text-base md:text-lg">
           {description}
         </p>
         
@@ -72,33 +71,30 @@ export function ProjectPreview({
           {technologies.map((tech) => (
             <span
               key={tech}
-              className="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full"
+              className="px-3 py-1 text-xs bg-blue-200 dark:bg-blue-800 text-blue-800 dark:text-blue-200 rounded-full"
             >
               {tech}
             </span>
           ))}
         </div>
         
-        <div className="flex gap-4">
+        <div className="flex gap-4 mt-auto">
           <a
             href={githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+            className="btn-primary"
           >
-            <FaGithub className="text-xl" />
-            <span>{t("viewCode")}</span>
+            {t("viewCode")}
           </a>
-          
           {liveUrl && (
             <a
               href={liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+              className="btn-secondary"
             >
-              <FaExternalLinkAlt className="text-xl" />
-              <span>{t("viewLive")}</span>
+              {t("viewLive")}
             </a>
           )}
         </div>

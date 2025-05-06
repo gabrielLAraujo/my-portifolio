@@ -81,23 +81,23 @@ export function SkillsSection() {
   };
 
   return (
-    <section id="skills" className="py-20 bg-gray-50 dark:bg-gray-800">
+    <section id="skills" className="py-24 bg-white dark:bg-blue-950 text-blue-900 dark:text-blue-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-4">
             {t("skills")}
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
+          <p className="text-lg text-blue-700 dark:text-blue-200">
             {t("skillsDescription")}
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {Object.entries(categories).map(([category, title]) => (
             <motion.div
               key={category}
@@ -105,9 +105,9 @@ export function SkillsSection() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true }}
-              className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm"
+              className="bg-blue-50 dark:bg-blue-900 rounded-xl p-6 shadow-sm"
             >
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+              <h3 className="text-xl font-semibold text-blue-600 dark:text-blue-400 mb-4">
                 {title[language as keyof typeof title]}
               </h3>
               <div className="grid grid-cols-2 gap-3">
@@ -117,10 +117,10 @@ export function SkillsSection() {
                     <motion.div
                       key={skill.name}
                       variants={item}
-                      className="flex items-center gap-2 p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors cursor-pointer"
+                      className="flex items-center gap-2 p-2 rounded-lg bg-blue-100 dark:bg-blue-800 hover:bg-blue-200 dark:hover:bg-blue-700 transition-colors cursor-pointer"
                     >
-                      <skill.icon className="text-xl text-blue-600 dark:text-blue-400" />
-                      <span className="text-sm text-gray-700 dark:text-gray-300">
+                      <skill.icon className="text-xl text-blue-600 dark:text-blue-200" />
+                      <span className="text-sm text-blue-900 dark:text-blue-100">
                         {skill.name}
                       </span>
                     </motion.div>

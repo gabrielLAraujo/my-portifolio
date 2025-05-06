@@ -52,7 +52,7 @@ export function ContactSection({ githubUrl, linkedinUrl, email, phone }: Contact
   const whatsappUrl = `https://wa.me/${whatsappNumber}`;
 
   return (
-    <section id="contact" className="py-20 bg-white dark:bg-gray-900">
+    <section id="contact" className="py-20 bg-white dark:bg-blue-950 text-blue-900 dark:text-blue-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -60,10 +60,10 @@ export function ContactSection({ githubUrl, linkedinUrl, email, phone }: Contact
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-4">
             {t("contact")}
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
+          <p className="text-lg text-blue-700 dark:text-blue-200">
             {t("interested")}
           </p>
         </motion.div>
@@ -75,7 +75,7 @@ export function ContactSection({ githubUrl, linkedinUrl, email, phone }: Contact
             viewport={{ once: true }}
             className="space-y-6"
           >
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
+            <h3 className="text-xl font-semibold text-blue-600 dark:text-blue-400 mb-6">
               {language === "pt" ? "Meus contatos" : "My contacts"}
             </h3>
             
@@ -83,56 +83,56 @@ export function ContactSection({ githubUrl, linkedinUrl, email, phone }: Contact
               href={linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 p-4 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              className="flex items-center gap-3 p-4 rounded-lg bg-blue-50 dark:bg-blue-900 hover:bg-blue-100 dark:hover:bg-blue-800 transition-colors"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               <FaLinkedin className="text-2xl text-blue-600 dark:text-blue-400" />
-              <span className="text-gray-700 dark:text-gray-300">LinkedIn</span>
+              <span className="text-blue-700 dark:text-blue-300">LinkedIn</span>
             </motion.a>
 
             <motion.a
               href={githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 p-4 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              className="flex items-center gap-3 p-4 rounded-lg bg-blue-50 dark:bg-blue-900 hover:bg-blue-100 dark:hover:bg-blue-800 transition-colors"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <FaGithub className="text-2xl text-gray-700 dark:text-gray-300" />
-              <span className="text-gray-700 dark:text-gray-300">GitHub</span>
+              <FaGithub className="text-2xl text-blue-700 dark:text-blue-300" />
+              <span className="text-blue-700 dark:text-blue-300">GitHub</span>
             </motion.a>
 
             <motion.a
               href={`mailto:${email}`}
-              className="flex items-center gap-3 p-4 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              className="flex items-center gap-3 p-4 rounded-lg bg-blue-50 dark:bg-blue-900 hover:bg-blue-100 dark:hover:bg-blue-800 transition-colors"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               <FaEnvelope className="text-2xl text-red-500 dark:text-red-400" />
-              <span className="text-gray-700 dark:text-gray-300">{email}</span>
+              <span className="text-blue-700 dark:text-blue-300">{email}</span>
             </motion.a>
             
             <motion.a
               href={`tel:${phone.replace(/\D/g, '')}`}
-              className="flex items-center gap-3 p-4 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              className="flex items-center gap-3 p-4 rounded-lg bg-blue-50 dark:bg-blue-900 hover:bg-blue-100 dark:hover:bg-blue-800 transition-colors"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               <FaPhone className="text-2xl text-green-500 dark:text-green-400" />
-              <span className="text-gray-700 dark:text-gray-300">{phone}</span>
+              <span className="text-blue-700 dark:text-blue-300">{phone}</span>
             </motion.a>
             
             <motion.a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 p-4 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              className="flex items-center gap-3 p-4 rounded-lg bg-blue-50 dark:bg-blue-900 hover:bg-blue-100 dark:hover:bg-blue-800 transition-colors"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               <FaWhatsapp className="text-2xl text-green-600 dark:text-green-500" />
-              <span className="text-gray-700 dark:text-gray-300">
+              <span className="text-blue-700 dark:text-blue-300">
                 {language === "pt" ? "Iniciar conversa no WhatsApp" : "Start a WhatsApp chat"}
               </span>
             </motion.a>
@@ -142,15 +142,15 @@ export function ContactSection({ githubUrl, linkedinUrl, email, phone }: Contact
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-sm"
+            className="bg-blue-50 dark:bg-blue-900 p-6 rounded-xl shadow-sm"
           >
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
+            <h3 className="text-xl font-semibold text-blue-600 dark:text-blue-400 mb-6">
               {language === "pt" ? "Envie uma mensagem" : "Send a message"}
             </h3>
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label htmlFor="name" className="block text-sm font-medium text-blue-700 dark:text-blue-300 mb-1">
                   {t("name")}
                 </label>
                 <input
@@ -160,12 +160,12 @@ export function ContactSection({ githubUrl, linkedinUrl, email, phone }: Contact
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+                  className="w-full px-4 py-2 rounded-lg border border-blue-200 dark:border-blue-800 bg-white dark:bg-blue-950 text-blue-900 dark:text-blue-100 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
                 />
               </div>
               
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label htmlFor="email" className="block text-sm font-medium text-blue-700 dark:text-blue-300 mb-1">
                   {t("email")}
                 </label>
                 <input
@@ -175,12 +175,12 @@ export function ContactSection({ githubUrl, linkedinUrl, email, phone }: Contact
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+                  className="w-full px-4 py-2 rounded-lg border border-blue-200 dark:border-blue-800 bg-white dark:bg-blue-950 text-blue-900 dark:text-blue-100 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
                 />
               </div>
               
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label htmlFor="message" className="block text-sm font-medium text-blue-700 dark:text-blue-300 mb-1">
                   {t("message")}
                 </label>
                 <textarea
@@ -190,7 +190,7 @@ export function ContactSection({ githubUrl, linkedinUrl, email, phone }: Contact
                   onChange={handleChange}
                   required
                   rows={4}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+                  className="w-full px-4 py-2 rounded-lg border border-blue-200 dark:border-blue-800 bg-white dark:bg-blue-950 text-blue-900 dark:text-blue-100 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
                 ></textarea>
               </div>
               
