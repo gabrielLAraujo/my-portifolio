@@ -24,12 +24,18 @@ export function ContactSection({ githubUrl, linkedinUrl, email, phone }: Contact
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
-    
     try {
-      // Aqui você implementaria a lógica de envio do formulário
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulação de envio
-      setStatus("success");
-      setFormData({ name: "", email: "", message: "" });
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        setStatus("success");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        setStatus("error");
+      }
     } catch (error) {
       console.error('Erro ao enviar email:', error);
       setStatus("error");
