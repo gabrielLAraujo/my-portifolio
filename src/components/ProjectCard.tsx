@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 interface ProjectCardProps {
   title: string;
@@ -9,6 +10,7 @@ interface ProjectCardProps {
   technologies: string[];
   githubUrl: string;
   previewUrl?: string;
+  imageUrl: string;
 }
 
 export function ProjectCard({ 
@@ -17,11 +19,26 @@ export function ProjectCard({
   features, 
   technologies, 
   githubUrl, 
-  previewUrl 
+  previewUrl, 
+  imageUrl 
 }: ProjectCardProps) {
   return (
     <motion.div className="bg-blue-50 dark:bg-blue-900 rounded-xl p-6 shadow-lg flex flex-col justify-between h-full text-blue-900 dark:text-blue-100">
       <div>
+        <div className="relative w-full h-48 overflow-hidden rounded-t-lg">
+          <Image
+            src={imageUrl}
+            alt={title}
+            fill
+            className="object-cover transition-transform duration-300 hover:scale-110"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            priority={true}
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = '/images/project-placeholder.png';
+            }}
+          />
+        </div>
         <h3 className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">{title}</h3>
         <p className="mb-4">{description}</p>
         <div className="flex flex-wrap gap-2 mb-4">

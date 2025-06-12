@@ -8,24 +8,24 @@ import { useLanguage } from "@/contexts/LanguageContext";
 interface ProjectPreviewProps {
   title: string;
   description: string;
-  image?: string;
-  githubUrl: string;
-  liveUrl?: string;
   technologies: string[];
+  githubUrl: string;
+  liveUrl: string;
+  imageUrl: string;
 }
 
 export function ProjectPreview({
   title,
   description,
-  image,
+  technologies,
   githubUrl,
   liveUrl,
-  technologies,
+  imageUrl
 }: ProjectPreviewProps) {
   const { t } = useLanguage();
   const [isLoading, setIsLoading] = useState(true);
 
-  const previewUrl = image || `https://api.microlink.io?url=${encodeURIComponent(liveUrl || githubUrl)}&screenshot=true&meta=false&embed=screenshot.url`;
+  const previewUrl = imageUrl || `https://api.microlink.io?url=${encodeURIComponent(liveUrl || githubUrl)}&screenshot=true&meta=false&embed=screenshot.url`;
   const projectUrl = liveUrl || githubUrl;
 
   return (
@@ -47,6 +47,12 @@ export function ProjectPreview({
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-105 rounded-t-xl"
           onLoadingComplete={() => setIsLoading(false)}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority={true}
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = '/images/project-placeholder.png';
+          }}
         />
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center">

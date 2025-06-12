@@ -11,6 +11,13 @@ const projects = [
     githubUrl: "https://github.com/gabrielLAraujo/dev-logger",
     liveUrl: "https://dev-logger.vercel.app",
     technologies: ["Next.js", "TypeScript", "Tailwind CSS", "GitHub API"],
+  },
+  {
+    title: "Pokedex",
+    description: "Sistema para registro e acompanhamento de commits e projetos de desenvolvimento. Permite gerenciar projetos, visualizar commits em tempo real e gerar relatórios de produtividade.",
+    githubUrl: "https://github.com/gabrielLAraujo/pokedex",
+    liveUrl: "https://pokedex-henna-rho.vercel.app/",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "PokeAPI"],
   }
 ];
 
@@ -36,7 +43,15 @@ export function ProjectsSection() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <ProjectPreview key={index} {...project} />
+            <ProjectPreview
+              key={index}
+              title={project.title}
+              description={project.description}
+              technologies={project.technologies}
+              githubUrl={project.githubUrl}
+              liveUrl={project.liveUrl}
+              imageUrl={project.liveUrl ? `https://api.microlink.io?url=${encodeURIComponent(project.liveUrl)}&screenshot=true&meta=false&embed=screenshot.url` : '/images/project-placeholder.png'}
+            />
           ))}
         </div>
       </div>
