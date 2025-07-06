@@ -6,26 +6,45 @@ import { ProjectPreview } from "./ProjectPreview";
 
 const projects = [
   {
+    title: "NextReport",
+    description:
+      "Gerador de relatórios avançado com templates HTML personalizáveis, suporte a Handlebars e exportação para PDF/Excel. Permite criar relatórios dinâmicos com formatação de dados, cálculos automáticos e visualização em tempo real.",
+    githubUrl: "https://github.com/gabrielLAraujo/next-report",
+    liveUrl: "https://next-report-lime.vercel.app/",
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Handlebars",
+      "PDF Generation",
+    ],
+  },
+  {
     title: "Dev Logger",
-    description: "Sistema para registro e acompanhamento de commits e projetos de desenvolvimento. Permite gerenciar projetos, visualizar commits em tempo real e gerar relatórios de produtividade.",
+    description:
+      "Sistema para registro e acompanhamento de commits e projetos de desenvolvimento. Permite gerenciar projetos, visualizar commits em tempo real e gerar relatórios de produtividade.",
     githubUrl: "https://github.com/gabrielLAraujo/dev-logger",
     liveUrl: "https://dev-logger.vercel.app",
     technologies: ["Next.js", "TypeScript", "Tailwind CSS", "GitHub API"],
   },
   {
     title: "Pokedex",
-    description: "Sistema para registro e acompanhamento de commits e projetos de desenvolvimento. Permite gerenciar projetos, visualizar commits em tempo real e gerar relatórios de produtividade.",
+    description:
+      "Sistema para registro e acompanhamento de commits e projetos de desenvolvimento. Permite gerenciar projetos, visualizar commits em tempo real e gerar relatórios de produtividade.",
     githubUrl: "https://github.com/gabrielLAraujo/pokedex",
     liveUrl: "https://pokedex-henna-rho.vercel.app/",
     technologies: ["Next.js", "TypeScript", "Tailwind CSS", "PokeAPI"],
-  }
+  },
 ];
 
 export function ProjectsSection() {
   const { t } = useLanguage();
 
   return (
-    <section id="projects" className="py-24 bg-white dark:bg-blue-950 text-blue-900 dark:text-blue-100">
+    <section
+      id="projects"
+      className="py-24 bg-white dark:bg-blue-950 text-blue-900 dark:text-blue-100"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -50,11 +69,17 @@ export function ProjectsSection() {
               technologies={project.technologies}
               githubUrl={project.githubUrl}
               liveUrl={project.liveUrl}
-              imageUrl={project.liveUrl ? `https://api.microlink.io?url=${encodeURIComponent(project.liveUrl)}&screenshot=true&meta=false&embed=screenshot.url` : '/images/project-placeholder.png'}
+              imageUrl={
+                project.liveUrl
+                  ? `https://api.microlink.io?url=${encodeURIComponent(
+                      project.liveUrl
+                    )}&screenshot=true&meta=false&embed=screenshot.url`
+                  : "/images/project-placeholder.png"
+              }
             />
           ))}
         </div>
       </div>
     </section>
   );
-} 
+}
