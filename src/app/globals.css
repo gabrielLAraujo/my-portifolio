@@ -3,92 +3,304 @@
 @tailwind utilities;
 
 @layer base {
+  /* Focus styles aprimorados */
+  :focus {
+    outline: 2px solid theme("colors.blue.500");
+    outline-offset: 2px;
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid theme("colors.blue.500");
+    outline-offset: 2px;
+  }
+
+  .dark :focus-visible {
+    outline-color: theme("colors.dark.accent");
+  }
+
+  /* Screen reader only */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .sr-only:focus,
+  .sr-only:active {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* Transições suaves para tema */
+  .theme-transition {
+    transition: background-color 0.3s ease, color 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  /* Remove outline em elementos com tabindex programático */
+  [tabindex="-1"]:focus {
+    outline: none !important;
+  }
+
+  /* Melhor foco para elementos interativos */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid theme("colors.blue.500");
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .dark button:focus-visible,
+  .dark a:focus-visible,
+  .dark input:focus-visible,
+  .dark textarea:focus-visible,
+  .dark select:focus-visible {
+    outline-color: theme("colors.dark.accent");
+  }
+
+  /* Estados de disabled */
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* Melhorias tipográficas */
+  html {
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
   body {
-    @apply bg-background-light text-text-primary-light dark:bg-background-dark dark:text-text-primary-dark;
-    @apply transition-colors duration-300;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+      Arial, sans-serif;
+    background-color: white;
+    color: theme("colors.gray.900");
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Tema escuro com nova paleta */
+  .dark body {
+    background-color: theme("colors.dark.primary");
+    background-image: theme("backgroundImage.gradient-dark");
+    color: theme("colors.dark.text");
+  }
+
+  /* Alto contraste */
+  @media (prefers-contrast: high) {
+    :focus-visible {
+      outline-width: 3px;
+      outline-color: #000000 !important;
+    }
+
+    .dark :focus-visible {
+      outline-color: #ffffff !important;
+    }
+
+    .text-blue-600 {
+      color: #0000ff !important;
+    }
+
+    .dark .text-blue-400 {
+      color: theme("colors.dark.accent") !important;
+    }
+
+    .text-blue-700 {
+      color: #1e40af !important;
+    }
+
+    .dark .text-blue-300 {
+      color: theme("colors.dark.text") !important;
+    }
+  }
+
+  /* Movimento reduzido */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Tipografia responsiva */
+  .text-responsive {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+  }
+
+  .heading-responsive {
+    font-size: clamp(1.5rem, 5vw, 3rem);
   }
 }
 
 @layer components {
-  .theme-transition {
-    @apply transition-colors duration-300;
+  /* Botões acessíveis */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-white font-medium rounded-lg transition-all duration-200 focus-ring;
+    background: linear-gradient(
+      135deg,
+      theme("colors.blue.600"),
+      theme("colors.blue.700")
+    );
   }
 
+  .btn-primary:hover {
+    background: linear-gradient(
+      135deg,
+      theme("colors.blue.700"),
+      theme("colors.blue.800")
+    );
+    transform: translateY(-1px);
+  }
+
+  .dark .btn-primary {
+    background: linear-gradient(
+      135deg,
+      theme("colors.dark.accent"),
+      theme("colors.dark.purple")
+    );
+    color: theme("colors.dark.primary");
+  }
+
+  .dark .btn-primary:hover {
+    background: linear-gradient(135deg, #0fc75a, #6d28d9);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-medium rounded-lg border-2 transition-all duration-200 focus-ring;
+    border-color: theme("colors.blue.600");
+    color: theme("colors.blue.600");
+    background-color: transparent;
+  }
+
+  .btn-secondary:hover {
+    background-color: theme("colors.blue.600");
+    color: white;
+  }
+
+  .dark .btn-secondary {
+    border-color: theme("colors.dark.accent");
+    color: theme("colors.dark.accent");
+  }
+
+  .dark .btn-secondary:hover {
+    background-color: theme("colors.dark.accent");
+    color: theme("colors.dark.primary");
+  }
+
+  /* Cards */
   .card {
-    @apply bg-surface-light dark:bg-surface-dark;
-    @apply border border-border-light dark:border-border-dark;
-    @apply rounded-lg shadow-sm;
-    @apply transition-all duration-300;
+    @apply rounded-xl p-6 transition-all duration-300 focus-ring;
+    background-color: white;
+    border: 1px solid theme("colors.gray.200");
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 
-  .heading-1 {
-    @apply text-4xl font-bold text-text-primary-light dark:text-text-primary-dark;
+  .card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
   }
 
-  .heading-2 {
-    @apply text-3xl font-bold text-text-primary-light dark:text-text-primary-dark;
+  .dark .card {
+    background-color: theme("colors.dark.surface");
+    border-color: theme("colors.dark.border");
+    box-shadow: theme("boxShadow.dark-lg");
   }
 
-  .heading-3 {
-    @apply text-2xl font-bold text-text-primary-light dark:text-text-primary-dark;
+  /* Inputs */
+  .form-input {
+    @apply w-full px-4 py-2 rounded-lg border transition-colors duration-200 focus-ring;
+    border-color: theme("colors.gray.300");
+    background-color: white;
+    color: theme("colors.gray.900");
   }
 
-  .text-body {
-    @apply text-text-secondary-light dark:text-text-secondary-dark;
+  .form-input:focus {
+    border-color: theme("colors.blue.500");
   }
 
-  .link {
-    @apply text-accent-light dark:text-accent-dark hover:underline;
+  .dark .form-input {
+    background-color: theme("colors.dark.surface");
+    border-color: theme("colors.dark.border");
+    color: theme("colors.dark.text");
   }
 
-  .button-primary {
-    @apply bg-primary-500 text-white hover:bg-primary-600;
-    @apply dark:bg-primary-400 dark:hover:bg-primary-500;
-    @apply rounded-lg px-4 py-2 font-medium;
-    @apply transition-colors duration-300;
+  .dark .form-input:focus {
+    border-color: theme("colors.dark.accent");
   }
 
-  .button-secondary {
-    @apply bg-surface-light dark:bg-surface-dark;
-    @apply text-text-primary-light dark:text-text-primary-dark;
-    @apply border border-border-light dark:border-border-dark;
-    @apply hover:bg-gray-100 dark:hover:bg-gray-800;
-    @apply rounded-lg px-4 py-2 font-medium;
-    @apply transition-colors duration-300;
+  .form-label {
+    @apply block text-sm font-medium mb-1;
+    color: theme("colors.gray.700");
+  }
+
+  .dark .form-label {
+    color: theme("colors.dark.text");
+  }
+
+  /* Skip links */
+  .skip-link {
+    @apply sr-only focus:not-sr-only;
   }
 }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@layer utilities {
+  /* Focus ring utility */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+    --tw-ring-color: theme("colors.blue.500");
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  .dark .focus-ring {
+    --tw-ring-color: theme("colors.dark.accent");
+  }
+
+  .focus-ring-inset {
+    @apply focus:outline-none focus:ring-2 focus:ring-inset;
+    --tw-ring-color: theme("colors.blue.500");
+  }
+
+  .dark .focus-ring-inset {
+    --tw-ring-color: theme("colors.dark.accent");
+  }
+
+  /* Movimento seguro */
+  .motion-safe {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: inherit;
+      transition: inherit;
+    }
+  }
+
+  /* Utilitários responsivos */
+  .text-responsive {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+  }
+
+  .heading-responsive {
+    font-size: clamp(1.5rem, 5vw, 3rem);
   }
 }
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-}
-
-.theme-transition {
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-}
-
-/* Estilos para o tema claro */
-:root[class="light"] {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-/* Estilos para o tema escuro */
-:root[class="dark"] {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-} 
