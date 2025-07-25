@@ -8,7 +8,7 @@ export interface ErrorInfo {
   message: string;
   code?: string | number;
   context?: string;
-  details?: any;
+  details?: unknown; // Mudança: any -> unknown
   retryAction?: () => void;
 }
 
@@ -108,7 +108,7 @@ export function useErrorHandler() {
   }, [handleError]);
 
   const handleNetworkError = useCallback((
-    error: any,
+    error: unknown, // Mudança: any -> unknown
     options?: {
       context?: string;
       retryAction?: () => void;
@@ -116,8 +116,9 @@ export function useErrorHandler() {
   ) => {
     // Verificar tipo específico de erro de rede
     const isNetworkError = !navigator.onLine || 
-      error?.code === 'NETWORK_ERROR' ||
-      error?.message?.includes('fetch');
+      (error && typeof error === 'object' && 'code' in error && error.code === 'NETWORK_ERROR') ||
+      (error && typeof error === 'object' && 'message' in error && 
+       typeof error.message === 'string' && error.message.includes('fetch'));
 
     if (isNetworkError) {
       const title = language === 'pt' ? 'Erro de Conexão' : 'Connection Error';
@@ -168,7 +169,8 @@ function getErrorTitle(error: ErrorInfo, language: string): string {
   };
 
   const lang = language as 'pt' | 'en';
-  return titles[lang][error.code as string] || titles[lang].default;
+  const codeKey = error.code as keyof typeof titles[typeof lang];
+  return titles[lang][codeKey] || titles[lang].default;
 }
 
 function getErrorMessage(error: ErrorInfo, language: string): string {
@@ -189,5 +191,6 @@ function getErrorMessage(error: ErrorInfo, language: string): string {
   };
 
   const lang = language as 'pt' | 'en';
-  return contextMessages[lang][error.context as string] || error.message;
+  const contextKey = error.context as keyof typeof contextMessages[typeof lang];
+  return contextMessages[lang][contextKey] || error.message;
 } 
