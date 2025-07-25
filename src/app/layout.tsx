@@ -21,7 +21,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen theme-transition`} suppressHydrationWarning>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#2563eb" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/profile.jpg" />
+        <meta
+          name="google-site-verification"
+          content="sua-verificacao-google"
+        />
+      </head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen theme-transition`}
+        suppressHydrationWarning
+      >
         <Providers>{children}</Providers>
       </body>
     </html>

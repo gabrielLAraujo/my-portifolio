@@ -33,7 +33,7 @@ export function FloatingControls() {
         {theme === "dark" ? (
           <FaSun className="text-xl text-yellow-500" />
         ) : (
-          <FaMoon className="text-xl text-blue-500" />
+          <FaMoon className="text-xl text-yellow-500" />
         )}
       </motion.button>
 
@@ -50,4 +50,4 @@ export function FloatingControls() {
       </motion.button>
     </motion.div>
   );
-} 
+}
