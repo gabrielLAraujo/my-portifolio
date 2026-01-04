@@ -1,29 +1,31 @@
-"use client";
+'use client';
 
-import { HeroSection } from "@/components/HeroSection";
-import { FloatingControls } from "@/components/FloatingControls";
-import { ScrollToTop } from "@/components/ScrollToTop";
-import { ScrollProgress } from "@/components/ScrollProgress";
-import { PreloadResources } from "@/components/PreloadResources";
-import { SkipLinks } from "@/components/SkipLinks";
-import { ToastContainer } from "@/components/Toast";
-import { SectionTransition } from "@/components/SectionTransition";
-import { contactInfo } from "@/config/contact";
-import { useKeyboardNavigation } from "@/hooks/useKeyboardNavigation";
-import { useToast } from "@/hooks/useToast";
-import Head from "next/head";
-import dynamic from "next/dynamic";
-import { Suspense } from "react";
+import { HeroSection } from '@/components/sections/HeroSection';
+import { FloatingControls } from '@/components/layout/FloatingControls';
+import { ScrollToTop } from '@/components/layout/ScrollToTop';
+import { ScrollProgress } from '@/components/layout/ScrollProgress';
+import { PreloadResources } from '@/components/PreloadResources';
+import { SkipLinks } from '@/components/SkipLinks';
+import { ToastContainer } from '@/components/Toast';
+import { SectionTransition } from '@/components/SectionTransition';
+import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
+import { contactInfo } from '@/config/contact';
+import { useKeyboardNavigation } from '@/hooks/useKeyboardNavigation';
+import { useToast } from '@/hooks/useToast';
+import { getStructuredDataScript } from '@/lib/seo/structured-data';
+import Head from 'next/head';
+import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
 import {
   LoadingSkeleton,
   ProjectCardSkeleton,
   SkillCardSkeleton,
-} from "@/components/LoadingSkeleton";
+} from '@/components/LoadingSkeleton';
 
 // Lazy loading para componentes menos críticos
 const AboutSection = dynamic(
   () =>
-    import("@/components/AboutSection").then((mod) => ({
+    import('@/components/sections/AboutSection').then((mod) => ({
       default: mod.AboutSection,
     })),
   {
@@ -31,12 +33,7 @@ const AboutSection = dynamic(
       <div className="py-24 bg-white dark:bg-blue-950">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <LoadingSkeleton
-              variant="text"
-              width="300px"
-              height="40px"
-              className="mx-auto mb-4"
-            />
+            <LoadingSkeleton variant="text" width="300px" height="40px" className="mx-auto mb-4" />
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="space-y-6">
@@ -49,10 +46,7 @@ const AboutSection = dynamic(
             </div>
             <div className="grid grid-cols-2 gap-6">
               {[...Array(4)].map((_, i) => (
-                <div
-                  key={i}
-                  className="bg-blue-50 dark:bg-blue-900 p-6 rounded-xl"
-                >
+                <div key={i} className="bg-blue-50 dark:bg-blue-900 p-6 rounded-xl">
                   <LoadingSkeleton
                     variant="circle"
                     width="48px"
@@ -65,12 +59,7 @@ const AboutSection = dynamic(
                     height="24px"
                     className="mx-auto mb-1"
                   />
-                  <LoadingSkeleton
-                    variant="text"
-                    width="80px"
-                    height="16px"
-                    className="mx-auto"
-                  />
+                  <LoadingSkeleton variant="text" width="80px" height="16px" className="mx-auto" />
                 </div>
               ))}
             </div>
@@ -83,7 +72,7 @@ const AboutSection = dynamic(
 
 const SkillsSection = dynamic(
   () =>
-    import("@/components/SkillsSection").then((mod) => ({
+    import('@/components/sections/SkillsSection').then((mod) => ({
       default: mod.SkillsSection,
     })),
   {
@@ -91,18 +80,8 @@ const SkillsSection = dynamic(
       <div className="py-24 bg-white dark:bg-blue-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <LoadingSkeleton
-              variant="text"
-              width="200px"
-              height="40px"
-              className="mx-auto mb-4"
-            />
-            <LoadingSkeleton
-              variant="text"
-              width="400px"
-              height="20px"
-              className="mx-auto"
-            />
+            <LoadingSkeleton variant="text" width="200px" height="40px" className="mx-auto mb-4" />
+            <LoadingSkeleton variant="text" width="400px" height="20px" className="mx-auto" />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[...Array(4)].map((_, i) => (
@@ -117,7 +96,7 @@ const SkillsSection = dynamic(
 
 const ProjectsSection = dynamic(
   () =>
-    import("@/components/ProjectsSection").then((mod) => ({
+    import('@/components/sections/ProjectsSection').then((mod) => ({
       default: mod.ProjectsSection,
     })),
   {
@@ -125,18 +104,8 @@ const ProjectsSection = dynamic(
       <div className="py-24 bg-white dark:bg-blue-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <LoadingSkeleton
-              variant="text"
-              width="200px"
-              height="40px"
-              className="mx-auto mb-4"
-            />
-            <LoadingSkeleton
-              variant="text"
-              width="500px"
-              height="20px"
-              className="mx-auto"
-            />
+            <LoadingSkeleton variant="text" width="200px" height="40px" className="mx-auto mb-4" />
+            <LoadingSkeleton variant="text" width="500px" height="20px" className="mx-auto" />
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
             {[...Array(2)].map((_, i) => (
@@ -154,7 +123,7 @@ const ProjectsSection = dynamic(
 
 const ContactSection = dynamic(
   () =>
-    import("@/components/ContactSection").then((mod) => ({
+    import('@/components/sections/ContactSection').then((mod) => ({
       default: mod.ContactSection,
     })),
   {
@@ -162,18 +131,8 @@ const ContactSection = dynamic(
       <div className="py-20 bg-white dark:bg-blue-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <LoadingSkeleton
-              variant="text"
-              width="200px"
-              height="32px"
-              className="mx-auto mb-4"
-            />
-            <LoadingSkeleton
-              variant="text"
-              width="400px"
-              height="20px"
-              className="mx-auto"
-            />
+            <LoadingSkeleton variant="text" width="200px" height="32px" className="mx-auto mb-4" />
+            <LoadingSkeleton variant="text" width="400px" height="20px" className="mx-auto" />
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="space-y-6">
@@ -182,22 +141,13 @@ const ContactSection = dynamic(
                   key={i}
                   className="flex items-center gap-3 p-4 rounded-lg bg-blue-50 dark:bg-blue-900"
                 >
-                  <LoadingSkeleton
-                    variant="circle"
-                    width="32px"
-                    height="32px"
-                  />
+                  <LoadingSkeleton variant="circle" width="32px" height="32px" />
                   <LoadingSkeleton variant="text" width="150px" height="16px" />
                 </div>
               ))}
             </div>
             <div className="bg-blue-50 dark:bg-blue-900 p-6 rounded-xl">
-              <LoadingSkeleton
-                variant="text"
-                width="200px"
-                height="24px"
-                className="mb-6"
-              />
+              <LoadingSkeleton variant="text" width="200px" height="24px" className="mb-6" />
               <div className="space-y-4">
                 <LoadingSkeleton variant="text" width="100%" height="40px" />
                 <LoadingSkeleton variant="text" width="100%" height="40px" />
@@ -219,49 +169,17 @@ export default function Home() {
   // Gerenciar toasts
   const { toasts, removeToast } = useToast();
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Gabriel Leite Araújo",
-    jobTitle: "Full Stack Software Engineer",
-    description:
-      "Full Stack Software Engineer especializado em React, Next.js, Node.js e TypeScript. Criando soluções web modernas e eficientes com foco em experiência do usuário.",
-    url: "https://app.frauchesgabriel.work",
-    image: "https://app.frauchesgabriel.work/profile.jpg",
-    sameAs: [contactInfo.github, contactInfo.linkedin],
-    knowsAbout: [
-      "JavaScript",
-      "TypeScript",
-      "React",
-      "Next.js",
-      "Node.js",
-      "HTML",
-      "CSS",
-      "Tailwind CSS",
-      "MongoDB",
-      "PostgreSQL",
-      "Git",
-      "Docker",
-    ],
-    worksFor: {
-      "@type": "Organization",
-      name: "Freelancer",
-    },
-    contactPoint: {
-      "@type": "ContactPoint",
-      email: contactInfo.email,
-      contactType: "professional",
-    },
-  };
+  // Get structured data
+  const structuredDataScript = getStructuredDataScript();
 
   return (
-    <>
+    <ErrorBoundary>
       <PreloadResources />
       <Head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData),
+            __html: structuredDataScript,
           }}
         />
       </Head>
@@ -270,17 +188,9 @@ export default function Home() {
       <SkipLinks />
 
       {/* Sistema de Toasts */}
-      <ToastContainer
-        toasts={toasts}
-        onClose={removeToast}
-        position="top-right"
-      />
+      <ToastContainer toasts={toasts} onClose={removeToast} position="top-right" />
 
-      <main
-        id="main-content"
-        role="main"
-        aria-label="Conteúdo principal do portfólio"
-      >
+      <main id="main-content" role="main" aria-label="Conteúdo principal do portfólio">
         <ScrollProgress />
         <FloatingControls />
         <ScrollToTop />
@@ -350,11 +260,7 @@ export default function Home() {
         <section id="contact" aria-label="Entre em contato" tabIndex={-1}>
           <Suspense
             fallback={
-              <div
-                aria-live="polite"
-                aria-label="Carregando contato"
-                className="text-center py-12"
-              >
+              <div aria-live="polite" aria-label="Carregando contato" className="text-center py-12">
                 Carregando contato...
               </div>
             }
@@ -368,6 +274,6 @@ export default function Home() {
           </Suspense>
         </section>
       </main>
-    </>
+    </ErrorBoundary>
   );
 }

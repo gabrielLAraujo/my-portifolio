@@ -1,39 +1,42 @@
-"use client";
+'use client';
 
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { translations, type Translations } from "@/i18n/translations";
+import React, { createContext, useContext, useState } from 'react';
+import { translations, type Translations } from '@/i18n/translations';
 
 interface LanguageContextType {
-  language: "pt" | "en";
-  setLanguage: (lang: "pt" | "en") => void;
+  language: 'pt' | 'en';
+  setLanguage: (lang: 'pt' | 'en') => void;
   toggleLanguage: () => void;
   t: (key: keyof Translations) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<"pt" | "en">("en");
+function getInitialLanguage(): 'pt' | 'en' {
+  if (typeof window === 'undefined') return 'en';
 
-  useEffect(() => {
-    // Tenta obter o idioma salvo no localStorage
-    const savedLanguage = localStorage.getItem("language") as "pt" | "en" | null;
-    
-    if (savedLanguage) {
-      setLanguage(savedLanguage);
-    } else {
-      // Se não houver idioma salvo, detecta o idioma do navegador
-      const browserLanguage = navigator.language.toLowerCase();
-      const detectedLanguage = browserLanguage.startsWith("pt") ? "pt" : "en";
-      setLanguage(detectedLanguage);
-      localStorage.setItem("language", detectedLanguage);
+  const savedLanguage = localStorage.getItem('language') as 'pt' | 'en' | null;
+  if (savedLanguage) return savedLanguage;
+
+  const browserLanguage = navigator.language.toLowerCase();
+  const detectedLanguage = browserLanguage.startsWith('pt') ? 'pt' : 'en';
+  localStorage.setItem('language', detectedLanguage);
+  return detectedLanguage;
+}
+
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const [language, setLanguageState] = useState<'pt' | 'en'>(getInitialLanguage);
+
+  const setLanguage = (lang: 'pt' | 'en') => {
+    setLanguageState(lang);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('language', lang);
     }
-  }, []);
+  };
 
   const toggleLanguage = () => {
-    const newLanguage = language === "pt" ? "en" : "pt";
+    const newLanguage = language === 'pt' ? 'en' : 'pt';
     setLanguage(newLanguage);
-    localStorage.setItem("language", newLanguage);
   };
 
   const t = (key: keyof Translations): string => {
@@ -50,7 +53,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 export function useLanguage() {
   const context = useContext(LanguageContext);
   if (context === undefined) {
-    throw new Error("useLanguage must be used within a LanguageProvider");
+    throw new Error('useLanguage must be used within a LanguageProvider');
   }
   return context;
-} 
+}

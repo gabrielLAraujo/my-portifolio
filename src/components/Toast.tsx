@@ -1,28 +1,17 @@
-"use client";
+'use client';
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useEffect } from "react";
+import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect } from 'react';
 import {
   FaCheckCircle,
   FaExclamationCircle,
   FaInfoCircle,
   FaTimesCircle,
   FaTimes,
-} from "react-icons/fa";
+} from 'react-icons/fa';
+import type { Toast } from '@/contexts/ToastContext';
 
-export type ToastType = "success" | "error" | "warning" | "info";
-
-export interface Toast {
-  id: string;
-  type: ToastType;
-  title: string;
-  message?: string;
-  duration?: number;
-  action?: {
-    label: string;
-    onClick: () => void;
-  };
-}
+export type { Toast };
 
 interface ToastProps {
   toast: Toast;
@@ -32,31 +21,31 @@ interface ToastProps {
 const toastConfig = {
   success: {
     icon: FaCheckCircle,
-    iconColor: "text-green-500",
-    bgColor: "bg-green-50 dark:bg-green-900/20",
-    borderColor: "border-green-200 dark:border-green-800",
-    textColor: "text-green-800 dark:text-green-200",
+    iconColor: 'text-green-500',
+    bgColor: 'bg-green-50 dark:bg-green-900/20',
+    borderColor: 'border-green-200 dark:border-green-800',
+    textColor: 'text-green-800 dark:text-green-200',
   },
   error: {
     icon: FaTimesCircle,
-    iconColor: "text-red-500",
-    bgColor: "bg-red-50 dark:bg-red-900/20",
-    borderColor: "border-red-200 dark:border-red-800",
-    textColor: "text-red-800 dark:text-red-200",
+    iconColor: 'text-red-500',
+    bgColor: 'bg-red-50 dark:bg-red-900/20',
+    borderColor: 'border-red-200 dark:border-red-800',
+    textColor: 'text-red-800 dark:text-red-200',
   },
   warning: {
     icon: FaExclamationCircle,
-    iconColor: "text-yellow-500",
-    bgColor: "bg-yellow-50 dark:bg-yellow-900/20",
-    borderColor: "border-yellow-200 dark:border-yellow-800",
-    textColor: "text-yellow-800 dark:text-yellow-200",
+    iconColor: 'text-yellow-500',
+    bgColor: 'bg-yellow-50 dark:bg-yellow-900/20',
+    borderColor: 'border-yellow-200 dark:border-yellow-800',
+    textColor: 'text-yellow-800 dark:text-yellow-200',
   },
   info: {
     icon: FaInfoCircle,
-    iconColor: "text-blue-500",
-    bgColor: "bg-blue-50 dark:bg-blue-900/20",
-    borderColor: "border-blue-200 dark:border-blue-800",
-    textColor: "text-blue-800 dark:text-blue-200",
+    iconColor: 'text-blue-500',
+    bgColor: 'bg-blue-50 dark:bg-blue-900/20',
+    borderColor: 'border-blue-200 dark:border-blue-800',
+    textColor: 'text-blue-800 dark:text-blue-200',
   },
 };
 
@@ -97,9 +86,7 @@ export function ToastItem({ toast, onClose }: ToastProps) {
           <h4 className={`font-semibold ${config.textColor}`}>{toast.title}</h4>
 
           {toast.message && (
-            <p className={`text-sm mt-1 ${config.textColor} opacity-90`}>
-              {toast.message}
-            </p>
+            <p className={`text-sm mt-1 ${config.textColor} opacity-90`}>{toast.message}</p>
           )}
 
           {toast.action && (
@@ -130,12 +117,12 @@ export function ToastItem({ toast, onClose }: ToastProps) {
       {toast.duration && toast.duration > 0 && (
         <motion.div
           className={`absolute bottom-0 left-0 h-1 ${config.iconColor.replace(
-            "text-",
-            "bg-"
+            'text-',
+            'bg-'
           )} rounded-bl-lg`}
-          initial={{ width: "100%" }}
-          animate={{ width: "0%" }}
-          transition={{ duration: toast.duration / 1000, ease: "linear" }}
+          initial={{ width: '100%' }}
+          animate={{ width: '0%' }}
+          transition={{ duration: toast.duration / 1000, ease: 'linear' }}
         />
       )}
     </motion.div>
@@ -146,28 +133,24 @@ interface ToastContainerProps {
   toasts: Toast[];
   onClose: (id: string) => void;
   position?:
-    | "top-right"
-    | "top-left"
-    | "bottom-right"
-    | "bottom-left"
-    | "top-center"
-    | "bottom-center";
+    | 'top-right'
+    | 'top-left'
+    | 'bottom-right'
+    | 'bottom-left'
+    | 'top-center'
+    | 'bottom-center';
 }
 
 const positionClasses = {
-  "top-right": "top-4 right-4",
-  "top-left": "top-4 left-4",
-  "bottom-right": "bottom-4 right-4",
-  "bottom-left": "bottom-4 left-4",
-  "top-center": "top-4 left-1/2 -translate-x-1/2",
-  "bottom-center": "bottom-4 left-1/2 -translate-x-1/2",
+  'top-right': 'top-4 right-4',
+  'top-left': 'top-4 left-4',
+  'bottom-right': 'bottom-4 right-4',
+  'bottom-left': 'bottom-4 left-4',
+  'top-center': 'top-4 left-1/2 -translate-x-1/2',
+  'bottom-center': 'bottom-4 left-1/2 -translate-x-1/2',
 };
 
-export function ToastContainer({
-  toasts,
-  onClose,
-  position = "top-right",
-}: ToastContainerProps) {
+export function ToastContainer({ toasts, onClose, position = 'top-right' }: ToastContainerProps) {
   return (
     <div
       className={`fixed z-[9999] pointer-events-none ${positionClasses[position]}`}

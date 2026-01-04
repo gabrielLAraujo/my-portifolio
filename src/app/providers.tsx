@@ -1,19 +1,15 @@
-"use client";
+'use client';
 
-import { ThemeProvider } from "next-themes";
-import { LanguageProvider } from "@/contexts/LanguageContext";
+import { ThemeProvider } from 'next-themes';
+import { LanguageProvider } from '@/contexts/LanguageContext';
+import { ToastProvider } from '@/components/ui/Toast';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-      disableTransitionOnChange
-    >
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
       <LanguageProvider>
-        {children}
+        <ToastProvider>{children}</ToastProvider>
       </LanguageProvider>
     </ThemeProvider>
   );
-} 
+}
