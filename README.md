@@ -36,14 +36,14 @@ npm run lint     # Checar código
 
 ### Email (Formulário de Contato)
 
-Crie `.env.local`:
+Crie `.env.local` na raiz do projeto:
 
 ```env
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=seu-email@gmail.com
-SMTP_PASS=sua-senha-app
+EMAIL_USER=seu-email@exemplo.com
+EMAIL_PASS=sua-senha-de-app-aqui
 ```
+
+**Nota:** Use senhas de aplicativo, não sua senha principal.
 
 ## 💡 Recursos
 
