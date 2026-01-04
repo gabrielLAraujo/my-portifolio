@@ -1,223 +1,273 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Image from 'next/image';
-import { ArrowRight } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import Tilt from 'react-parallax-tilt';
+import { MeshGradient } from '@/components/effects/MeshGradient';
+import { MagneticButton } from '@/components/effects/MagneticButton';
+
+const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+
+function useScrambleText(text: string, delay: number = 0) {
+  const [displayText, setDisplayText] = useState('');
+  const [isComplete, setIsComplete] = useState(false);
+
+  useEffect(() => {
+    const startTimer = setTimeout(() => {
+      let iteration = 0;
+
+      const interval = setInterval(() => {
+        setDisplayText(
+          text
+            .split('')
+            .map((char, index) => {
+              if (char === ' ') return ' ';
+              if (index < iteration) {
+                return text[index];
+              }
+              return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+            })
+            .join('')
+        );
+
+        if (iteration >= text.length) {
+          clearInterval(interval);
+          setIsComplete(true);
+        }
+
+        iteration += 1 / 3;
+      }, 40);
+
+      return () => clearInterval(interval);
+    }, delay);
+
+    return () => clearTimeout(startTimer);
+  }, [text, delay]);
+
+  return {
+    displayText:
+      displayText ||
+      text
+        .split('')
+        .map(() => '_')
+        .join(''),
+    isComplete,
+  };
+}
 
 export function HeroSection() {
   const { t, language } = useLanguage();
-  const [displayedText, setDisplayedText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const containerRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end start'],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   const fullName = 'Gabriel Leite Araujo';
+  const { displayText: scrambledName, isComplete } = useScrambleText(fullName, 500);
 
-  useEffect(() => {
-    if (currentIndex < fullName.length) {
-      const timeout = setTimeout(() => {
-        setDisplayedText((prev) => prev + fullName[currentIndex]);
-        setCurrentIndex((prev) => prev + 1);
-      }, 100);
-      return () => clearTimeout(timeout);
-    }
-  }, [currentIndex, fullName]);
-
-  const timeline =
-    language === 'pt'
-      ? [
-          { year: '2018', text: 'Comecei' },
-          { year: '2023', text: 'Dev Fullstack' },
-          { year: '2025', text: 'Portfólio ativo' },
-        ]
-      : [
-          { year: '2018', text: 'Started' },
-          { year: '2023', text: 'Fullstack Dev' },
-          { year: '2025', text: 'Active Portfolio' },
-        ];
+  const socialLinks = [
+    { icon: Github, href: 'https://github.com/gabrielLAraujo', label: 'GitHub' },
+    { icon: Linkedin, href: 'https://linkedin.com/in/gabriel-leite-araujo', label: 'LinkedIn' },
+    { icon: Mail, href: 'mailto:gabrielleite.araujo@hotmail.com', label: 'Email' },
+  ];
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-white dark:bg-dark-primary text-blue-900 dark:text-dark-text">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100 dark:bg-gradient-dark opacity-50" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent)]" />
-      </div>
+    <section
+      ref={containerRef}
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-bg-primary"
+    >
+      {/* Animated Mesh Gradient Background */}
+      <MeshGradient intensity="medium" />
 
+      {/* Grid Pattern Overlay */}
+      <div className="absolute inset-0 grid-background opacity-30" />
+
+      {/* Main Content */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="text-center px-4 relative z-10"
+        style={{ y, opacity }}
+        className="relative z-10 text-center px-4 max-w-5xl mx-auto"
       >
-        <h1 className="text-5xl md:text-6xl font-bold text-blue-900 dark:text-dark-text mb-6 min-h-[1.2em]">
-          {displayedText}
-          <motion.span
-            animate={{ opacity: [1, 0] }}
-            transition={{
-              duration: 0.8,
-              repeat: Infinity,
-              repeatType: 'reverse',
-            }}
-            className="text-blue-500 dark:text-dark-accent"
-          >
-            |
-          </motion.span>
-        </h1>
-
+        {/* Greeting Badge */}
         <motion.div
-          className="relative w-48 h-48 mx-auto mb-8"
-          initial={{
-            y: -500,
-            x: 0,
-            rotateY: 0,
-            opacity: 0,
-          }}
-          animate={{
-            y: 0,
-            x: [0, 20, -15, 8, -3, 0], // Oscilação suave
-            rotateY: [0, 180, 360, 540, 720, 0], // Flip contínuo
-            opacity: 1,
-          }}
-          transition={{
-            duration: 2.5,
-            ease: 'easeOut',
-            x: {
-              ease: 'easeInOut',
-            },
-            rotateY: {
-              ease: 'linear',
-            },
-          }}
-          style={{
-            perspective: '1000px',
-            transformStyle: 'preserve-3d',
-          }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-bg-tertiary/50 backdrop-blur-sm border border-dark-border/50 mb-8"
         >
-          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-green-500 via-purple-500 to-green-500 dark:from-dark-accent dark:via-dark-purple dark:to-dark-accent p-1 shadow-coin">
-            <div className="w-full h-full rounded-full bg-white dark:bg-dark-primary p-2">
-              <div className="relative w-full h-full rounded-full overflow-hidden">
+          <span className="w-2 h-2 rounded-full bg-accent-green animate-pulse" />
+          <span className="text-sm text-text-secondary font-mono">
+            {language === 'pt' ? 'Disponível para projetos' : 'Available for projects'}
+          </span>
+        </motion.div>
+
+        {/* Name with Scramble Effect */}
+        <motion.h1
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-6 tracking-tight"
+        >
+          <span className="gradient-text">{scrambledName}</span>
+          {!isComplete && (
+            <motion.span
+              className="inline-block w-[4px] h-[0.8em] bg-accent-green ml-2 align-middle"
+              animate={{ opacity: [1, 0] }}
+              transition={{ duration: 0.4, repeat: Infinity, repeatType: 'reverse' }}
+            />
+          )}
+        </motion.h1>
+
+        {/* Profile Image with 3D Tilt */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.8, ease: 'easeOut' }}
+          className="relative mx-auto mb-8"
+        >
+          <Tilt
+            tiltMaxAngleX={15}
+            tiltMaxAngleY={15}
+            perspective={1000}
+            scale={1.02}
+            transitionSpeed={2000}
+            gyroscope={true}
+            className="w-40 h-40 md:w-48 md:h-48 mx-auto"
+          >
+            <div className="relative w-full h-full">
+              {/* Animated gradient border */}
+              <div className="absolute inset-0 rounded-full p-[3px] bg-gradient-to-r from-accent-green via-accent-purple to-accent-cyan animate-spin-slow">
+                <div className="w-full h-full rounded-full bg-bg-primary" />
+              </div>
+
+              {/* Image container */}
+              <div className="absolute inset-[6px] rounded-full overflow-hidden">
                 {!imageLoaded && (
-                  <div className="absolute inset-0 bg-gradient-to-br from-green-100 to-purple-200 dark:from-dark-secondary dark:to-dark-surface animate-pulse rounded-full" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-accent-green/20 to-accent-purple/20 animate-pulse rounded-full" />
                 )}
-
-                <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none z-20">
-                  <motion.div
-                    className="absolute top-2 right-6 w-2 h-2 bg-white dark:bg-dark-accent rounded-full"
-                    animate={{ scale: [1, 1.5, 1], opacity: [0.7, 1, 0.7] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                  />
-                  <motion.div
-                    className="absolute bottom-4 left-4 w-1.5 h-1.5 bg-yellow-300 dark:bg-dark-purple rounded-full"
-                    animate={{ scale: [1, 1.3, 1], opacity: [0.6, 1, 0.6] }}
-                    transition={{ duration: 1.5, repeat: Infinity, delay: 1 }}
-                  />
-                  <motion.div
-                    className="absolute top-8 left-2 w-1 h-1 bg-green-400 dark:bg-dark-accent rounded-full"
-                    animate={{ scale: [1, 1.4, 1], opacity: [0.5, 1, 0.5] }}
-                    transition={{ duration: 1.8, repeat: Infinity, delay: 1.5 }}
-                  />
-                </div>
-
                 <Image
                   src="/profile.jpg"
                   alt={
                     language === 'pt'
-                      ? 'Foto de perfil de Gabriel Leite Araújo, Full Stack Software Engineer'
-                      : 'Profile picture of Gabriel Leite Araújo, Full Stack Software Engineer'
+                      ? 'Foto de perfil de Gabriel Leite Araújo'
+                      : 'Profile picture of Gabriel Leite Araújo'
                   }
                   fill
-                  className={`object-cover rounded-full ${
+                  className={`object-cover transition-opacity duration-500 ${
                     imageLoaded ? 'opacity-100' : 'opacity-0'
                   }`}
                   onLoad={() => setImageLoaded(true)}
                   priority
                   quality={90}
-                  sizes="(max-width: 768px) 192px, 192px"
-                  placeholder="blur"
-                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                  sizes="(max-width: 768px) 160px, 192px"
                 />
               </div>
+
+              {/* Glow effect */}
+              <div className="absolute inset-0 rounded-full bg-accent-green/20 blur-2xl -z-10" />
             </div>
-          </div>
+          </Tilt>
         </motion.div>
 
+        {/* Title */}
         <motion.p
-          className="text-xl md:text-2xl text-blue-700 dark:text-dark-text/90 mb-8 max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5 }}
+          transition={{ delay: 1.2, duration: 0.6 }}
+          className="text-xl md:text-2xl text-text-primary mb-4 font-display"
         >
-          {t('heroTitle')}
+          Full Stack Software Engineer
         </motion.p>
 
+        {/* Subtitle */}
         <motion.p
-          className="text-lg text-blue-600 dark:text-dark-accent mb-8 max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.8 }}
+          transition={{ delay: 1.4, duration: 0.6 }}
+          className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed"
         >
           {t('heroSubtitle')}
         </motion.p>
 
+        {/* CTA Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.1 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          transition={{ delay: 1.6, duration: 0.6 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
         >
-          <motion.a
-            href="#projects"
-            className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
-            whileHover={{ scale: 1.02, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            {t('viewMyProjects')}
-            <ArrowRight size={20} />
-          </motion.a>
+          <MagneticButton href="#projects" className="btn-primary group" strength={0.2}>
+            <span>{t('viewMyProjects')}</span>
+            <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
+          </MagneticButton>
 
-          <motion.a
-            href="#contact"
-            className="inline-flex items-center justify-center gap-2 border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-400 dark:hover:text-blue-900 px-6 py-3 rounded-lg font-medium transition-all duration-300"
-            whileHover={{ scale: 1.02, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            {language === 'pt' ? 'Entre em Contato' : 'Get In Touch'}
-          </motion.a>
+          <MagneticButton href="#contact" className="btn-secondary" strength={0.2}>
+            <span>{language === 'pt' ? 'Entre em Contato' : 'Get In Touch'}</span>
+          </MagneticButton>
+        </motion.div>
+
+        {/* Social Links */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.8, duration: 0.6 }}
+          className="flex justify-center gap-6"
+        >
+          {socialLinks.map((social, index) => (
+            <motion.a
+              key={social.label}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative p-3 rounded-full bg-bg-tertiary/50 backdrop-blur-sm border border-dark-border/50 text-text-secondary hover:text-accent-green hover:border-accent-green/50 transition-all duration-300"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.8 + index * 0.1 }}
+              whileHover={{ scale: 1.1, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              aria-label={social.label}
+            >
+              <social.icon className="w-5 h-5" />
+              <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs text-text-muted opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                {social.label}
+              </span>
+            </motion.a>
+          ))}
         </motion.div>
       </motion.div>
 
+      {/* Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.5 }}
-        className="absolute bottom-12 left-0 right-0"
+        transition={{ delay: 2.2, duration: 0.6 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
-        <div className="max-w-3xl mx-auto px-4">
-          <div className="flex justify-between items-center">
-            {timeline.map((item, index) => (
-              <motion.div
-                key={item.year}
-                className="text-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 2.7 + index * 0.2 }}
-              >
-                <motion.div
-                  className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-1"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  {item.year}
-                </motion.div>
-                <div className="text-sm text-blue-700 dark:text-blue-200">{item.text}</div>
-                {index < timeline.length - 1 && (
-                  <div className="hidden md:block w-24 h-0.5 bg-gradient-to-r from-blue-200 to-blue-400 dark:from-blue-800 dark:to-blue-600 mx-auto my-2" />
-                )}
-              </motion.div>
-            ))}
+        <motion.a
+          href="#about"
+          className="flex flex-col items-center gap-2 text-text-muted hover:text-accent-green transition-colors"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <span className="text-xs font-mono uppercase tracking-widest">
+            {language === 'pt' ? 'Scroll' : 'Scroll'}
+          </span>
+          <div className="w-6 h-10 rounded-full border-2 border-current flex justify-center pt-2">
+            <motion.div
+              className="w-1.5 h-1.5 rounded-full bg-current"
+              animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            />
           </div>
-        </div>
+        </motion.a>
       </motion.div>
     </section>
   );

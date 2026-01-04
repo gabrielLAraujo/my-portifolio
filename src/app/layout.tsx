@@ -1,38 +1,21 @@
-"use client";
+'use client';
 
-import { Geist, Geist_Mono } from "next/font/google";
-import { Providers } from "./providers";
-import "./globals.css";
+import { Providers } from './providers';
+import { fontVariables } from './fonts';
+import './globals.css';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#2563eb" />
+        <meta name="theme-color" content="#0a0a0f" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/profile.jpg" />
-        <meta
-          name="google-site-verification"
-          content="sua-verificacao-google"
-        />
+        <meta name="google-site-verification" content="sua-verificacao-google" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-screen theme-transition`}
+        className={`${fontVariables} font-body min-h-screen theme-transition antialiased`}
         suppressHydrationWarning
       >
         <Providers>{children}</Providers>

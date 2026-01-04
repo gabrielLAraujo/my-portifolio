@@ -1,7 +1,6 @@
 'use client';
 
 import { HeroSection } from '@/components/sections/HeroSection';
-import { FloatingControls } from '@/components/layout/FloatingControls';
 import { ScrollToTop } from '@/components/layout/ScrollToTop';
 import { ScrollProgress } from '@/components/layout/ScrollProgress';
 import { PreloadResources } from '@/components/PreloadResources';
@@ -9,6 +8,9 @@ import { SkipLinks } from '@/components/SkipLinks';
 import { ToastContainer } from '@/components/Toast';
 import { SectionTransition } from '@/components/SectionTransition';
 import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
+import { Navbar } from '@/components/layout/Navbar';
+import { SmoothScroll } from '@/components/SmoothScroll';
+import { CustomCursor } from '@/components/CustomCursor';
 import { contactInfo } from '@/config/contact';
 import { useKeyboardNavigation } from '@/hooks/useKeyboardNavigation';
 import { useToast } from '@/hooks/useToast';
@@ -30,7 +32,7 @@ const AboutSection = dynamic(
     })),
   {
     loading: () => (
-      <div className="py-24 bg-white dark:bg-blue-950">
+      <div className="py-24 bg-bg-secondary">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <LoadingSkeleton variant="text" width="300px" height="40px" className="mx-auto mb-4" />
@@ -46,7 +48,7 @@ const AboutSection = dynamic(
             </div>
             <div className="grid grid-cols-2 gap-6">
               {[...Array(4)].map((_, i) => (
-                <div key={i} className="bg-blue-50 dark:bg-blue-900 p-6 rounded-xl">
+                <div key={i} className="bg-bg-tertiary/30 p-6 rounded-xl">
                   <LoadingSkeleton
                     variant="circle"
                     width="48px"
@@ -77,7 +79,7 @@ const SkillsSection = dynamic(
     })),
   {
     loading: () => (
-      <div className="py-24 bg-white dark:bg-blue-950">
+      <div className="py-24 bg-bg-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <LoadingSkeleton variant="text" width="200px" height="40px" className="mx-auto mb-4" />
@@ -101,7 +103,7 @@ const ProjectsSection = dynamic(
     })),
   {
     loading: () => (
-      <div className="py-24 bg-white dark:bg-blue-950">
+      <div className="py-24 bg-bg-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <LoadingSkeleton variant="text" width="200px" height="40px" className="mx-auto mb-4" />
@@ -128,7 +130,7 @@ const ContactSection = dynamic(
     })),
   {
     loading: () => (
-      <div className="py-20 bg-white dark:bg-blue-950">
+      <div className="py-20 bg-bg-secondary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <LoadingSkeleton variant="text" width="200px" height="32px" className="mx-auto mb-4" />
@@ -137,16 +139,13 @@ const ContactSection = dynamic(
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="space-y-6">
               {[...Array(5)].map((_, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-3 p-4 rounded-lg bg-blue-50 dark:bg-blue-900"
-                >
+                <div key={i} className="flex items-center gap-3 p-4 rounded-lg bg-bg-tertiary/30">
                   <LoadingSkeleton variant="circle" width="32px" height="32px" />
                   <LoadingSkeleton variant="text" width="150px" height="16px" />
                 </div>
               ))}
             </div>
-            <div className="bg-blue-50 dark:bg-blue-900 p-6 rounded-xl">
+            <div className="bg-bg-tertiary/30 p-6 rounded-xl">
               <LoadingSkeleton variant="text" width="200px" height="24px" className="mb-6" />
               <div className="space-y-4">
                 <LoadingSkeleton variant="text" width="100%" height="40px" />
@@ -163,117 +162,137 @@ const ContactSection = dynamic(
 );
 
 export default function Home() {
-  // Inicializar navegação por teclado
   useKeyboardNavigation();
-
-  // Gerenciar toasts
   const { toasts, removeToast } = useToast();
-
-  // Get structured data
   const structuredDataScript = getStructuredDataScript();
 
   return (
     <ErrorBoundary>
-      <PreloadResources />
-      <Head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: structuredDataScript,
-          }}
-        />
-      </Head>
+      <SmoothScroll>
+        <PreloadResources />
+        <Head>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: structuredDataScript,
+            }}
+          />
+        </Head>
 
-      {/* Skip Links para acessibilidade */}
-      <SkipLinks />
+        <SkipLinks />
+        <ToastContainer toasts={toasts} onClose={removeToast} position="top-right" />
 
-      {/* Sistema de Toasts */}
-      <ToastContainer toasts={toasts} onClose={removeToast} position="top-right" />
+        {/* Custom Cursor - Desktop only */}
+        <CustomCursor />
 
-      <main id="main-content" role="main" aria-label="Conteúdo principal do portfólio">
-        <ScrollProgress />
-        <FloatingControls />
-        <ScrollToTop />
+        {/* Navigation */}
+        <Navbar />
 
-        {/* Seção crítica - carregamento imediato */}
-        <section id="hero" aria-label="Apresentação pessoal" tabIndex={-1}>
-          <HeroSection />
-        </section>
+        <main id="main-content" role="main" aria-label="Conteúdo principal do portfólio">
+          <ScrollProgress />
+          <ScrollToTop />
 
-        <SectionTransition />
+          {/* Hero Section */}
+          <section id="hero" aria-label="Apresentação pessoal" tabIndex={-1}>
+            <HeroSection />
+          </section>
 
-        {/* Seções com lazy loading */}
-        <section id="about" aria-label="Sobre mim" tabIndex={-1}>
-          <Suspense
-            fallback={
-              <div
-                aria-live="polite"
-                aria-label="Carregando seção sobre"
-                className="text-center py-12"
-              >
-                Carregando...
-              </div>
-            }
-          >
-            <AboutSection />
-          </Suspense>
-        </section>
+          <SectionTransition />
 
-        <SectionTransition />
+          {/* About Section */}
+          <section id="about" aria-label="Sobre mim" tabIndex={-1}>
+            <Suspense
+              fallback={
+                <div
+                  aria-live="polite"
+                  aria-label="Carregando seção sobre"
+                  className="text-center py-12"
+                >
+                  Carregando...
+                </div>
+              }
+            >
+              <AboutSection />
+            </Suspense>
+          </section>
 
-        <section id="skills" aria-label="Minhas habilidades" tabIndex={-1}>
-          <Suspense
-            fallback={
-              <div
-                aria-live="polite"
-                aria-label="Carregando habilidades"
-                className="text-center py-12"
-              >
-                Carregando habilidades...
-              </div>
-            }
-          >
-            <SkillsSection />
-          </Suspense>
-        </section>
+          <SectionTransition />
 
-        <SectionTransition />
+          {/* Skills Section */}
+          <section id="skills" aria-label="Minhas habilidades" tabIndex={-1}>
+            <Suspense
+              fallback={
+                <div
+                  aria-live="polite"
+                  aria-label="Carregando habilidades"
+                  className="text-center py-12"
+                >
+                  Carregando habilidades...
+                </div>
+              }
+            >
+              <SkillsSection />
+            </Suspense>
+          </section>
 
-        <section id="projects" aria-label="Meus projetos" tabIndex={-1}>
-          <Suspense
-            fallback={
-              <div
-                aria-live="polite"
-                aria-label="Carregando projetos"
-                className="text-center py-12"
-              >
-                Carregando projetos...
-              </div>
-            }
-          >
-            <ProjectsSection />
-          </Suspense>
-        </section>
+          <SectionTransition />
 
-        <SectionTransition />
+          {/* Projects Section */}
+          <section id="projects" aria-label="Meus projetos" tabIndex={-1}>
+            <Suspense
+              fallback={
+                <div
+                  aria-live="polite"
+                  aria-label="Carregando projetos"
+                  className="text-center py-12"
+                >
+                  Carregando projetos...
+                </div>
+              }
+            >
+              <ProjectsSection />
+            </Suspense>
+          </section>
 
-        <section id="contact" aria-label="Entre em contato" tabIndex={-1}>
-          <Suspense
-            fallback={
-              <div aria-live="polite" aria-label="Carregando contato" className="text-center py-12">
-                Carregando contato...
-              </div>
-            }
-          >
-            <ContactSection
-              githubUrl={contactInfo.github}
-              linkedinUrl={contactInfo.linkedin}
-              email={contactInfo.email}
-              phone={contactInfo.phone}
-            />
-          </Suspense>
-        </section>
-      </main>
+          <SectionTransition />
+
+          {/* Contact Section */}
+          <section id="contact" aria-label="Entre em contato" tabIndex={-1}>
+            <Suspense
+              fallback={
+                <div
+                  aria-live="polite"
+                  aria-label="Carregando contato"
+                  className="text-center py-12"
+                >
+                  Carregando contato...
+                </div>
+              }
+            >
+              <ContactSection
+                githubUrl={contactInfo.github}
+                linkedinUrl={contactInfo.linkedin}
+                email={contactInfo.email}
+                phone={contactInfo.phone}
+              />
+            </Suspense>
+          </section>
+        </main>
+
+        {/* Footer */}
+        <footer className="py-8 bg-bg-primary border-t border-dark-border/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <p className="text-text-muted text-sm">
+                © {new Date().getFullYear()} Gabriel Leite Araujo. Todos os direitos reservados.
+              </p>
+              <p className="text-text-muted text-sm font-mono">
+                Feito com <span className="text-accent-green">♥</span> usando Next.js
+              </p>
+            </div>
+          </div>
+        </footer>
+      </SmoothScroll>
     </ErrorBoundary>
   );
 }
