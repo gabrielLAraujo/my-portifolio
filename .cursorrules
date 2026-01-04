@@ -1,0 +1,163 @@
+# Regras do Projeto - Portfolio Next.js
+
+## Stack e Tecnologias
+- Next.js 15.3.8 (App Router)
+- React 19
+- TypeScript (strict mode)
+- Tailwind CSS 3.4.1 com dark mode
+- Framer Motion para animações
+- next-themes para gerenciamento de temas
+- Sistema de i18n personalizado
+
+## Estrutura do Projeto
+- `src/app/` - Pages e API routes (App Router)
+- `src/components/` - Componentes React reutilizáveis
+- `src/contexts/` - Contexts (ex: LanguageContext)
+- `src/data/` - Dados estáticos (projetos, skills)
+- `src/hooks/` - Custom React hooks
+- `src/i18n/` - Sistema de internacionalização
+- `src/types/` - Definições TypeScript
+- `src/config/` - Arquivos de configuração
+- Usar alias `@/` para importações absolutas
+
+## Princípios de Código
+1. **Código humano e limpo**: Evitar excesso de comentários. O código deve ser auto-explicativo
+2. **TypeScript strict**: Sempre tipar corretamente, evitar `any`
+3. **Componentes funcionais**: Usar apenas function components com hooks
+4. **Performance first**: Priorizar performance e otimização de bundle
+
+## Componentes React
+- Usar Server Components por padrão
+- Adicionar `"use client"` apenas quando necessário (hooks, eventos, contexts)
+- Nomes em PascalCase (ex: `HeroSection.tsx`)
+- Props tipadas com interfaces ou types
+- Desestruturar props no parâmetro da função
+- Usar React.FC apenas quando necessário
+
+```typescript
+interface ButtonProps {
+  label: string;
+  onClick: () => void;
+  variant?: 'primary' | 'secondary';
+}
+
+export function Button({ label, onClick, variant = 'primary' }: ButtonProps) {
+  return <button onClick={onClick}>{label}</button>;
+}
+```
+
+## Estilização com Tailwind
+- Usar classes utilitárias do Tailwind
+- Paleta de cores customizada (primary, dark, accent)
+- Dark mode com `class` strategy: `dark:bg-dark-primary`
+- Animações definidas no config: `animate-fade-in-up`, `animate-coin-flip`
+- Responsive design: mobile-first approach
+
+```tsx
+<div className="bg-surface-light dark:bg-dark-primary text-text-primary-light dark:text-dark-text">
+  {content}
+</div>
+```
+
+## TypeScript
+- Usar `interface` para props e objetos públicos
+- Usar `type` para unions, intersections e aliases
+- Sempre exportar types/interfaces usados externamente
+- Evitar `any`, usar `unknown` se necessário
+- Habilitar strict mode
+
+## Internacionalização
+- Usar o LanguageContext para multilíngue
+- Traduções em `src/i18n/translations.ts`
+- Suportar PT-BR e EN
+- Função `t()` para traduzir strings
+
+## API Routes
+- Localizar em `src/app/api/`
+- Usar Route Handlers do Next.js 15
+- Validar dados de entrada
+- Retornar JSON com status codes apropriados
+- Usar try/catch para error handling
+
+```typescript
+export async function POST(request: Request) {
+  try {
+    const data = await request.json();
+    // processar
+    return Response.json({ success: true }, { status: 200 });
+  } catch (error) {
+    return Response.json({ error: 'Erro' }, { status: 500 });
+  }
+}
+```
+
+## Performance
+- Otimizar imagens: usar `next/image`
+- Lazy loading de componentes pesados: `dynamic()`
+- Memoização quando apropriado: `useMemo`, `useCallback`
+- Code splitting automático pelo Next.js
+
+## Animações
+- Usar Framer Motion para animações complexas
+- Respeitar `prefers-reduced-motion`
+- Animações CSS do Tailwind para casos simples
+- Transições suaves entre seções
+
+## Acessibilidade
+- Usar tags semânticas HTML5
+- Labels em form inputs
+- Alt text em imagens
+- Keyboard navigation funcional
+- ARIA attributes quando necessário
+- Testes com VoiceOver/NVDA
+
+## SEO
+- Metadata em `src/app/metadata.ts`
+- Sitemap e robots.txt configurados
+- Open Graph tags
+- Schema.org quando aplicável
+
+## Nomenclatura
+- Componentes: `PascalCase`
+- Arquivos de componentes: `PascalCase.tsx`
+- Funções/variáveis: `camelCase`
+- Constantes: `UPPER_SNAKE_CASE`
+- Tipos/Interfaces: `PascalCase`
+- Hooks customizados: `useCamelCase`
+
+## Imports
+- Ordem: React/Next → External libs → Internal (absolute) → Internal (relative) → Types → Styles
+- Preferir named imports
+- Agrupar imports relacionados
+
+```typescript
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+
+import { Button } from '@/components/Button';
+import { useToast } from '@/hooks/useToast';
+
+import type { Project } from '@/types';
+```
+
+## Error Handling
+- Usar error boundaries para erros de React
+- Try/catch em async operations
+- Mensagens de erro user-friendly
+- Logging apropriado (console.error em dev)
+
+## Git
+- Commits em português
+- Mensagens descritivas e claras
+- Conventional commits: feat, fix, refactor, docs, style, test, chore
+
+## Testes (quando implementados)
+- Jest + React Testing Library
+- Testes em `__tests__` ou `.test.tsx`
+- Focar em comportamento do usuário
+- Mockar dependências externas
+
+## Comunicação
+- Todas as respostas devem ser em português
+- Documentação em português
+- Comentários em código (quando necessários) em português
