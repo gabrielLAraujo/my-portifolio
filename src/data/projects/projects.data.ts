@@ -103,6 +103,21 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/gabrielLAraujo/crypto-dashboard',
     liveUrl: 'https://crypto-dashboard-cyan.vercel.app/',
   },
+  {
+    id: 'espaco-desenvolver-viver',
+    title: 'Espaço Desenvolver & Viver',
+    description:
+      'Site institucional para espaço de psicoterapia com design acolhedor e profissional. Apresenta informações sobre o espaço, equipe multidisciplinar, infraestrutura e formulário de contato integrado com WhatsApp.',
+    longDescription:
+      'Plataforma web completa para espaço de psicoterapia com seções sobre proposta, equipe profissional, infraestrutura dos consultórios, localização e sistema de agendamento via WhatsApp. Design responsivo e otimizado para conversão.',
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+    links: {
+      live: 'https://web-tan-omega-79.vercel.app/',
+    },
+    featured: true,
+    status: 'active',
+    liveUrl: 'https://web-tan-omega-79.vercel.app/',
+  },
 ];
 
 export const getFeaturedProjects = (): Project[] => {

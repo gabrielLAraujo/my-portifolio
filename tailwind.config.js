@@ -9,25 +9,25 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Background Hierarchy - Dark Mode Premium
+        // Background Hierarchy - Usando variáveis CSS que respondem ao dark mode
         bg: {
-          primary: '#0a0a0f',
-          secondary: '#12121a',
-          tertiary: '#1a1a2e',
-          elevated: '#242438',
+          primary: 'var(--bg-primary)',
+          secondary: 'var(--bg-secondary)',
+          tertiary: 'var(--bg-tertiary)',
+          elevated: 'var(--bg-elevated, #242438)',
         },
         // Accent Gradient Signature
         accent: {
-          green: '#00ff88',
-          purple: '#7c3aed',
-          cyan: '#00d4ff',
+          green: 'var(--accent-green)',
+          purple: 'var(--accent-purple)',
+          cyan: 'var(--accent-cyan)',
           pink: '#ff0080',
         },
-        // Text Hierarchy
+        // Text Hierarchy - Usando variáveis CSS
         text: {
-          primary: '#f0f0f0',
-          secondary: '#8892b0',
-          muted: '#495670',
+          primary: 'var(--text-primary)',
+          secondary: 'var(--text-secondary)',
+          muted: 'var(--text-muted, #495670)',
         },
         // Legacy colors for compatibility
         primary: {
@@ -61,6 +61,7 @@ module.exports = {
           light: '#e2e8f0',
           dark: '#2a2a3e',
         },
+        'dark-border': 'var(--dark-border)',
       },
       fontFamily: {
         display: ['var(--font-space-grotesk)', 'system-ui', 'sans-serif'],

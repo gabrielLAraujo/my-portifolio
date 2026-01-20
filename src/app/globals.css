@@ -7,19 +7,28 @@
     --bg-primary: #ffffff;
     --bg-secondary: #f8fafc;
     --bg-tertiary: #f1f5f9;
+    --bg-elevated: #ffffff;
     --text-primary: #1e293b;
     --text-secondary: #64748b;
+    --text-muted: #94a3b8;
     --accent-green: #00ff88;
     --accent-purple: #7c3aed;
     --accent-cyan: #00d4ff;
+    --dark-border: #e2e8f0;
   }
 
   .dark {
     --bg-primary: #0a0a0f;
     --bg-secondary: #12121a;
     --bg-tertiary: #1a1a2e;
+    --bg-elevated: #242438;
     --text-primary: #f0f0f0;
     --text-secondary: #8892b0;
+    --text-muted: #495670;
+    --accent-green: #00ff88;
+    --accent-purple: #7c3aed;
+    --accent-cyan: #00d4ff;
+    --dark-border: #2a2a3e;
   }
 
   * {
@@ -129,7 +138,6 @@
   }
 
   .dark body {
-    background-color: var(--bg-primary);
     background-image: 
       radial-gradient(at 40% 20%, rgba(0, 255, 136, 0.08) 0px, transparent 50%),
       radial-gradient(at 80% 0%, rgba(124, 58, 237, 0.08) 0px, transparent 50%),
