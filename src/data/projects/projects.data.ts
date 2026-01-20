@@ -52,6 +52,57 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/gabrielLAraujo/pokedex',
     liveUrl: 'https://pokedex-henna-rho.vercel.app/',
   },
+  {
+    id: 'sample-dashboard',
+    title: 'Sample Dashboard',
+    description:
+      'Dashboard moderno e responsivo construído com TypeScript, oferecendo visualizações de dados interativas, gráficos em tempo real e interface intuitiva para análise de métricas.',
+    longDescription:
+      'Dashboard completo com múltiplas visualizações de dados, gráficos interativos, filtros avançados e design responsivo para análise de métricas em tempo real.',
+    technologies: ['TypeScript', 'React', 'Next.js', 'Tailwind CSS', 'Chart.js'],
+    links: {
+      github: 'https://github.com/gabrielLAraujo/saple-dashboard',
+      live: 'https://dist-theta-fawn.vercel.app/',
+    },
+    featured: true,
+    status: 'active',
+    githubUrl: 'https://github.com/gabrielLAraujo/saple-dashboard',
+    liveUrl: 'https://dist-theta-fawn.vercel.app/',
+  },
+  {
+    id: 'evera-livro-landing',
+    title: 'Evera Livro Landing',
+    description:
+      'Landing page moderna e otimizada para conversão de ebook, desenvolvida com foco em performance e experiência do usuário. Design responsivo, multi-idioma (PT/EN/ES) e otimizado para SEO.',
+    longDescription:
+      'Landing page profissional para ebook com animações suaves, formulários otimizados, seção de depoimentos, timer de oferta, integração com analytics e design focado em conversão e engajamento do usuário.',
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+    links: {
+      github: 'https://github.com/gabrielLAraujo/evera-livro-landing',
+      live: 'https://magenta-cajeta-0629ae.netlify.app/',
+    },
+    featured: false,
+    status: 'active',
+    githubUrl: 'https://github.com/gabrielLAraujo/evera-livro-landing',
+    liveUrl: 'https://magenta-cajeta-0629ae.netlify.app/',
+  },
+  {
+    id: 'crypto-dashboard',
+    title: 'Crypto Dashboard',
+    description:
+      'Dashboard de criptomoedas com acompanhamento de preços em tempo real, gráficos de mercado, análise de tendências e portfolio tracking. Interface moderna e intuitiva.',
+    longDescription:
+      'Plataforma completa para monitoramento de criptomoedas com atualizações em tempo real, gráficos interativos, histórico de preços, análise técnica e gerenciamento de portfolio.',
+    technologies: ['TypeScript', 'React', 'Next.js', 'Tailwind CSS', 'Chart.js', 'WebSocket'],
+    links: {
+      github: 'https://github.com/gabrielLAraujo/crypto-dashboard',
+      live: 'https://crypto-dashboard-cyan.vercel.app/',
+    },
+    featured: true,
+    status: 'active',
+    githubUrl: 'https://github.com/gabrielLAraujo/crypto-dashboard',
+    liveUrl: 'https://crypto-dashboard-cyan.vercel.app/',
+  },
 ];
 
 export const getFeaturedProjects = (): Project[] => {
