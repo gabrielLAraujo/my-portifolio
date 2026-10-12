@@ -2,6 +2,23 @@ import { Project } from '@/types';
 
 export const projects: Project[] = [
   {
+    id: 'garagem',
+    title: 'Garagem — Histórico do Carro',
+    description:
+      'App full-stack para o histórico de manutenções e modificações de veículos: peças e custos, fotos e notas fiscais, lembretes por km ou tempo, catálogo FIPE e link público só leitura. .NET 10 com Clean Architecture, DDD e CQRS, React no front e 773 testes. Construído com agentes de IA a partir de spec e planos escritos por mim.',
+    longDescription:
+      'API em Minimal APIs com Result/ProblemDetails, eventos de domínio na mesma transação, concorrência otimista, FIPE como camada anticorrupção com cache e fallback, uploads seguros (tipo pelos bytes, EXIF removido) e link público por allowlist. Front em React + TypeScript com tipos gerados do OpenAPI. Deploy em imagem única via Coolify numa VPS, com HTTPS e migrations no start.',
+    technologies: ['.NET 10', 'C#', 'PostgreSQL', 'React', 'TypeScript', 'Docker'],
+    links: {
+      github: 'https://github.com/gabrielLAraujo/app-maintenance-history',
+      live: 'https://garagem.frauchesgabriel.work/p/_xIUXlec5yU0sLf1Fg9z2JgkNnmfnXRUypBIuOfvoHE',
+    },
+    featured: true,
+    status: 'active',
+    githubUrl: 'https://github.com/gabrielLAraujo/app-maintenance-history',
+    liveUrl: 'https://garagem.frauchesgabriel.work/p/_xIUXlec5yU0sLf1Fg9z2JgkNnmfnXRUypBIuOfvoHE',
+  },
+  {
     id: 'next-report',
     title: 'NextReport',
     description:
