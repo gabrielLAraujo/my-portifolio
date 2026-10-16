@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    url: "https://app.frauchesgabriel.work",
+    url: "https://frauchesgabriel.work",
     title: "Gabriel Leite Araújo - Full Stack Software Engineer",
     description: "Full Stack Software Engineer especializado em React, Next.js, Node.js e TypeScript. Criando soluções web modernas e eficientes.",
     siteName: "Gabriel Araujo Portfolio",
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     images: ["/profile.jpg"],
   },
   alternates: {
-    canonical: "https://app.frauchesgabriel.work",
+    canonical: "https://frauchesgabriel.work",
   },
   category: "technology",
 }; 

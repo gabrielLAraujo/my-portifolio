@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/private/', '/admin/'],
     },
-    sitemap: 'https://app.frauchesgabriel.work/sitemap.xml',
-    host: 'https://app.frauchesgabriel.work',
+    sitemap: 'https://frauchesgabriel.work/sitemap.xml',
+    host: 'https://frauchesgabriel.work',
   }
 } 

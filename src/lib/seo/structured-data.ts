@@ -12,8 +12,8 @@ export function generatePersonStructuredData(): StructuredDataPerson {
     jobTitle: 'Full Stack Software Engineer',
     description:
       'Full Stack Software Engineer especializado em React, Next.js, Node.js e TypeScript. Criando soluções web modernas e eficientes com foco em experiência do usuário.',
-    url: 'https://app.frauchesgabriel.work',
-    image: 'https://app.frauchesgabriel.work/profile.jpg',
+    url: 'https://frauchesgabriel.work',
+    image: 'https://frauchesgabriel.work/profile.jpg',
     sameAs: [contactInfo.github, contactInfo.linkedin],
     knowsAbout: [
       'JavaScript',

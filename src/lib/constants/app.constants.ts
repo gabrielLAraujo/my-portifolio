@@ -4,7 +4,7 @@
 
 export const APP_NAME = 'Gabriel Leite Araújo - Portfolio';
 export const APP_DESCRIPTION = 'Full Stack Software Engineer Portfolio';
-export const APP_URL = 'https://app.frauchesgabriel.work';
+export const APP_URL = 'https://frauchesgabriel.work';
 
 export const SOCIAL_LINKS = {
   GITHUB: 'https://github.com/gabrielLAraujo',
