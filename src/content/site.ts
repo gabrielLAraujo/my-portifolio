@@ -6,6 +6,13 @@ export interface ServiceItem {
   title: string;
   text: string;
   example?: string;
+  price?: string;
+  timeline?: string;
+}
+
+export interface FaqItem {
+  question: string;
+  answer: string;
 }
 
 export interface CaseLink {
@@ -51,6 +58,8 @@ export interface SiteContent {
     intro: string;
     exampleLabel: string;
     items: ServiceItem[];
+    extras: string[];
+    priceNote?: string;
   };
   cases: {
     eyebrow: string;
@@ -86,6 +95,7 @@ export interface SiteContent {
       invalid: string;
     };
   };
+  faq: { id: string; eyebrow: string; title: string; items: FaqItem[] };
   footer: { rights: string };
 }
 
@@ -131,22 +141,33 @@ export const content: Record<Locale, SiteContent> = {
           title: 'Painéis de gestão e financeiro',
           text: 'Vendas, despesas e fluxo de caixa de cada empresa em uma tela, com dados importados da maquininha em vez de digitados de novo.',
           example: 'Fechamento',
+          price: 'A partir de R$ 6.000',
+          timeline: '3 a 5 semanas',
         },
         {
           title: 'Sistemas internos sob medida',
           text: 'Cadastros, controle de processos e áreas do cliente, com login, níveis de acesso e link público quando fizer sentido.',
           example: 'Garagem',
+          price: 'A partir de R$ 12.000',
+          timeline: '6 a 10 semanas',
         },
         {
           title: 'Integrações e automação',
           text: 'Ligar sistemas que hoje não conversam: maquininha, banco, nota fiscal, WhatsApp e planilhas. Menos trabalho manual e menos erro de digitação.',
+          price: 'A partir de R$ 2.500',
+          timeline: '1 a 3 semanas',
         },
         {
           title: 'Sites institucionais',
           text: 'Site rápido, fácil de achar no Google e com contato direto pelo WhatsApp.',
           example: 'Espaço Desenvolver & Viver',
+          price: 'Site a partir de R$ 2.500 · landing page a partir de R$ 1.500',
+          timeline: '1 a 3 semanas',
         },
       ],
+      extras: ['Suporte mensal: a partir de R$ 1.200 por mês (10 horas)', 'Hora avulsa: R$ 120'],
+      priceNote:
+        'Valores de referência. O preço do seu projeto vai na proposta, depois da conversa sobre o escopo.',
     },
     cases: {
       eyebrow: 'Cases',
@@ -282,6 +303,42 @@ export const content: Record<Locale, SiteContent> = {
           'Confira os campos: nome com pelo menos 2 letras, e-mail válido e mensagem com 10 caracteres ou mais.',
       },
     },
+    faq: {
+      id: 'duvidas',
+      eyebrow: 'Dúvidas',
+      title: 'Perguntas frequentes',
+      items: [
+        {
+          question: 'Quanto custa o meu projeto?',
+          answer:
+            'Os valores em Serviços são o ponto de partida. Depois da conversa sobre o que você precisa, envio uma proposta por escrito com escopo, prazo e preço.',
+        },
+        {
+          question: 'Quanto tempo leva?',
+          answer:
+            'Uma landing page fica pronta em 1 a 2 semanas; um site institucional, em 2 a 3; um painel de gestão, em 3 a 5; e um sistema interno, em 6 a 10 semanas. O prazo do seu projeto vai na proposta.',
+        },
+        {
+          question: 'Atende empresas de outras cidades?',
+          answer: 'Sim. Atendo remotamente em todo o Brasil, por WhatsApp, e-mail e videochamada.',
+        },
+        {
+          question: 'Como acompanho o andamento?',
+          answer:
+            'A cada 15 dias você recebe uma entrega que já pode usar e dá o retorno para ajustar o que vem depois.',
+        },
+        {
+          question: 'E depois que o sistema estiver pronto?',
+          answer:
+            'As correções combinadas na proposta estão incluídas. Para melhorias contínuas, há o suporte mensal a partir de R$ 1.200 por 10 horas.',
+        },
+        {
+          question: 'Onde o sistema fica hospedado?',
+          answer:
+            'No seu servidor ou em um serviço de nuvem. Ajudo a escolher a opção e deixo tudo configurado.',
+        },
+      ],
+    },
     footer: { rights: `© ${year} Gabriel Leite Araújo` },
   },
   en: {
@@ -330,6 +387,7 @@ export const content: Record<Locale, SiteContent> = {
           text: 'Payment and bank data imports, queues with RabbitMQ and SNS/SQS, and jobs that keep systems in sync.',
         },
       ],
+      extras: ['Contract rate: from US$ 35 per hour'],
     },
     cases: {
       eyebrow: 'Work',
@@ -467,6 +525,27 @@ export const content: Record<Locale, SiteContent> = {
         invalid:
           'Please check the fields: a name with at least 2 letters, a valid email and a message of 10 characters or more.',
       },
+    },
+    faq: {
+      id: 'faq',
+      eyebrow: 'FAQ',
+      title: 'Common questions',
+      items: [
+        {
+          question: 'What is your rate?',
+          answer: 'From US$ 35 per hour for contract work.',
+        },
+        {
+          question: 'Which time zone do you work in?',
+          answer:
+            'Brazil, UTC−3. That overlaps with US Eastern business hours and European afternoons.',
+        },
+        {
+          question: 'How do we start?',
+          answer:
+            'A short call about the problem and the team, then scope, timeline and estimate in writing.',
+        },
+      ],
     },
     footer: { rights: `© ${year} Gabriel Leite Araújo` },
   },

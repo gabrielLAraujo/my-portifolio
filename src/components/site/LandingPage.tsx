@@ -7,6 +7,7 @@ import {
   Mail,
   MapPin,
   MessageCircle,
+  Plus,
 } from 'lucide-react';
 import { contactInfo } from '@/config/contact';
 import {
@@ -173,27 +174,51 @@ function Services({ c, id, casesId }: { c: SiteContent; id: string; casesId: str
           intro={c.services.intro}
           id={id}
         />
-        <ol className="divide-y divide-line border-y border-line">
-          {c.services.items.map((item, index) => (
-            <li key={item.title} className="grid gap-2 py-6 sm:grid-cols-[3rem_minmax(0,1fr)]">
-              <span className="font-mono text-small text-ink-muted" aria-hidden="true">
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              <div>
-                <h3 className="text-h3 text-ink">{item.title}</h3>
-                <p className="mt-2 text-body text-ink-muted">{item.text}</p>
-                {item.example ? (
-                  <p className="mt-3 text-small text-ink-muted">
-                    {c.services.exampleLabel}:{' '}
-                    <a href={`#${casesId}`} className="link">
-                      {item.example}
-                    </a>
-                  </p>
-                ) : null}
-              </div>
-            </li>
-          ))}
-        </ol>
+        <div>
+          <ol className="divide-y divide-line border-y border-line">
+            {c.services.items.map((item, index) => (
+              <li key={item.title} className="grid gap-2 py-6 sm:grid-cols-[3rem_minmax(0,1fr)]">
+                <span className="font-mono text-small text-ink-muted" aria-hidden="true">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <div>
+                  <h3 className="text-h3 text-ink">{item.title}</h3>
+                  <p className="mt-2 text-body text-ink-muted">{item.text}</p>
+                  {item.price ? (
+                    <p className="mt-3 text-small">
+                      <span className="font-medium text-ink">{item.price}</span>
+                      {item.timeline ? (
+                        <span className="text-ink-muted"> · {item.timeline}</span>
+                      ) : null}
+                    </p>
+                  ) : null}
+                  {item.example ? (
+                    <p className="mt-2 text-small text-ink-muted">
+                      {c.services.exampleLabel}:{' '}
+                      <a href={`#${casesId}`} className="link">
+                        {item.example}
+                      </a>
+                    </p>
+                  ) : null}
+                </div>
+              </li>
+            ))}
+          </ol>
+          {c.services.extras.length > 0 || c.services.priceNote ? (
+            <div className="mt-6">
+              {c.services.extras.length > 0 ? (
+                <ul className="space-y-1 text-small font-medium text-ink">
+                  {c.services.extras.map((extra) => (
+                    <li key={extra}>{extra}</li>
+                  ))}
+                </ul>
+              ) : null}
+              {c.services.priceNote ? (
+                <p className="mt-3 text-small text-ink-muted">{c.services.priceNote}</p>
+              ) : null}
+            </div>
+          ) : null}
+        </div>
       </div>
     </section>
   );
@@ -384,6 +409,33 @@ function About({ c, id }: { c: SiteContent; id: string }) {
   );
 }
 
+function Faq({ c }: { c: SiteContent }) {
+  const { id } = c.faq;
+
+  return (
+    <section id={id} aria-labelledby={`${id}-title`} className="section border-t border-line">
+      <div className="container-content grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] md:gap-16">
+        <SectionHeading eyebrow={c.faq.eyebrow} title={c.faq.title} id={id} />
+        <div className="divide-y divide-line border-y border-line">
+          {c.faq.items.map((item) => (
+            <details key={item.question} className="group py-5">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-body font-medium text-ink [&::-webkit-details-marker]:hidden">
+                {item.question}
+                <Plus
+                  className="h-5 w-5 shrink-0 text-ink-muted transition-transform duration-150 group-open:rotate-45"
+                  strokeWidth={1.75}
+                  aria-hidden="true"
+                />
+              </summary>
+              <p className="mt-3 max-w-prose text-body text-ink-muted">{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Contact({ c, id, whatsapp }: { c: SiteContent; id: string; whatsapp: string }) {
   const channels = [
     { icon: Mail, label: contactInfo.email, href: `mailto:${contactInfo.email}`, external: false },
@@ -495,6 +547,7 @@ export function LandingPage({ locale }: { locale: Locale }) {
         <Cases c={c} id={ids.cases} />
         <Process c={c} id={ids.process} />
         <About c={c} id={ids.about} />
+        <Faq c={c} />
         <Contact c={c} id={ids.contact} whatsapp={whatsapp} />
       </main>
       <SiteFooter c={c} />
