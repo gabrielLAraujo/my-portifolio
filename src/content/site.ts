@@ -104,6 +104,8 @@ const year = new Date().getFullYear();
 const garagemUrl =
   'https://garagem.frauchesgabriel.work/p/_xIUXlec5yU0sLf1Fg9z2JgkNnmfnXRUypBIuOfvoHE';
 
+const fechamentoUrl = 'https://fechamento.frauchesgabriel.work/';
+
 export const content: Record<Locale, SiteContent> = {
   pt: {
     locale: 'pt',
@@ -185,8 +187,14 @@ export const content: Record<Locale, SiteContent> = {
             'Sistema web de gestão financeira, pessoal e das empresas, que importa as vendas da maquininha (Stone), organiza as movimentações por empresa e mostra vendas e fluxo de caixa mês a mês. Acesso por papéis (dono, operador e leitura), com convite por link.',
           result: 'As contas de cada empresa em uma tela, sem montar planilha no fim do mês.',
           stack: ['.NET 10', 'PostgreSQL', 'React', 'Docker'],
-          links: [],
-          note: 'Demo pública em breve',
+          links: [{ label: 'Ver demo', href: fechamentoUrl }],
+          note: 'Demo aberta, sem cadastro',
+          image: {
+            src: '/cases/fechamento.webp',
+            alt: 'Painel do Fechamento com as pendências e as vendas do mês de duas lavanderias fictícias',
+            width: 1066,
+            height: 666,
+          },
         },
         {
           id: 'garagem',
@@ -405,8 +413,14 @@ export const content: Record<Locale, SiteContent> = {
             'Web app for personal and business finances that imports card-terminal sales (Stone), organizes transactions by company and shows sales and monthly cash flow. Role-based access (owner, operator, viewer) with invite links.',
           result: 'Each company’s accounts on one screen, with no spreadsheet at month end.',
           stack: ['.NET 10', 'PostgreSQL', 'React', 'Docker'],
-          links: [],
-          note: 'Public demo coming soon',
+          links: [{ label: 'Open demo', href: fechamentoUrl }],
+          note: 'Open demo, no sign-up',
+          image: {
+            src: '/cases/fechamento.webp',
+            alt: 'Fechamento dashboard with pending tasks and monthly sales for two sample laundries',
+            width: 1066,
+            height: 666,
+          },
         },
         {
           id: 'garagem',
