@@ -20,9 +20,11 @@ export interface StructuredDataPerson {
   image: string;
   sameAs: string[];
   knowsAbout: string[];
-  worksFor: {
+  address: {
     '@type': string;
-    name: string;
+    addressLocality: string;
+    addressRegion: string;
+    addressCountry: string;
   };
   contactPoint: {
     '@type': string;

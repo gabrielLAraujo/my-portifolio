@@ -1,23 +1,27 @@
-'use client';
-
+import type { Metadata, Viewport } from 'next';
 import { Providers } from './providers';
 import { fontVariables } from './fonts';
+import { siteMetadata } from './metadata';
+import { getStructuredDataScript } from '@/lib/seo/structured-data';
 import './globals.css';
+
+export const metadata: Metadata = siteMetadata;
+
+export const viewport: Viewport = {
+  themeColor: '#0a0a0f',
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#0a0a0f" />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/profile.jpg" />
-        <meta name="google-site-verification" content="sua-verificacao-google" />
-      </head>
       <body
         className={`${fontVariables} font-body min-h-screen theme-transition antialiased`}
         suppressHydrationWarning
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: getStructuredDataScript() }}
+        />
         <Providers>{children}</Providers>
       </body>
     </html>

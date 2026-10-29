@@ -8,6 +8,7 @@ import { useState, useEffect, useRef } from 'react';
 import Tilt from 'react-parallax-tilt';
 import { MeshGradient } from '@/components/effects/MeshGradient';
 import { MagneticButton } from '@/components/effects/MagneticButton';
+import { contactInfo } from '@/config/contact';
 
 const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
 
@@ -75,9 +76,9 @@ export function HeroSection() {
   const { displayText: scrambledName, isComplete } = useScrambleText(fullName, 500);
 
   const socialLinks = [
-    { icon: Github, href: 'https://github.com/gabrielLAraujo', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://linkedin.com/in/gabriel-leite-araujo', label: 'LinkedIn' },
-    { icon: Mail, href: 'mailto:gabrielleite.araujo@hotmail.com', label: 'Email' },
+    { icon: Github, href: contactInfo.github, label: 'GitHub' },
+    { icon: Linkedin, href: contactInfo.linkedin, label: 'LinkedIn' },
+    { icon: Mail, href: `mailto:${contactInfo.email}`, label: 'Email' },
   ];
 
   return (
@@ -116,7 +117,10 @@ export function HeroSection() {
           transition={{ duration: 0.3 }}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-6 tracking-tight"
         >
-          <span className="gradient-text">{scrambledName}</span>
+          <span className="sr-only">{fullName}</span>
+          <span className="gradient-text" aria-hidden="true">
+            {scrambledName}
+          </span>
           {!isComplete && (
             <motion.span
               className="inline-block w-[4px] h-[0.8em] bg-accent-green ml-2 align-middle"

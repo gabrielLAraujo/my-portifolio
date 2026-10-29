@@ -1,3 +1,5 @@
+import { contactInfo } from '@/config/contact';
+
 /**
  * Application-wide constants
  */
@@ -7,11 +9,11 @@ export const APP_DESCRIPTION = 'Full Stack Software Engineer Portfolio';
 export const APP_URL = 'https://frauchesgabriel.work';
 
 export const SOCIAL_LINKS = {
-  GITHUB: 'https://github.com/gabrielLAraujo',
-  LINKEDIN: 'https://linkedin.com/in/gabrielaraujo',
+  GITHUB: contactInfo.github,
+  LINKEDIN: contactInfo.linkedin,
 } as const;
 
-export const CONTACT_EMAIL = 'your-email@example.com';
+export const CONTACT_EMAIL = contactInfo.email;
 
 export const ANIMATION_DURATION = {
   FAST: 200,
