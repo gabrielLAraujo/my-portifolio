@@ -17,7 +17,6 @@ const shared: Metadata = {
   authors: [{ name: 'Gabriel Leite Araújo', url: SITE_URL }],
   creator: 'Gabriel Leite Araújo',
   robots: { index: true, follow: true },
-  icons: { apple: '/profile.jpg' },
   category: 'technology',
   ...(googleVerification ? { verification: { google: googleVerification } } : {}),
 };
