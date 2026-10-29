@@ -304,7 +304,19 @@ function Cases({ c, id }: { c: SiteContent; id: string }) {
               <CaseMeta item={featured} />
             </div>
           </div>
-          <CaseFacts item={featured} labels={c.cases.labels} />
+          <div className="space-y-6">
+            {featured.image ? (
+              <Image
+                src={featured.image.src}
+                alt={featured.image.alt}
+                width={featured.image.width}
+                height={featured.image.height}
+                sizes="(min-width: 1120px) 700px, (min-width: 768px) 62vw, 100vw"
+                className="aspect-[16/10] w-full rounded-control border border-line object-cover object-top"
+              />
+            ) : null}
+            <CaseFacts item={featured} labels={c.cases.labels} />
+          </div>
         </article>
 
         <div className="mt-6 grid gap-6 md:grid-cols-2">
