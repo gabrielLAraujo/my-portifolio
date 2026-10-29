@@ -36,13 +36,20 @@ export const siteMetadata: Metadata = {
     siteName: 'Gabriel Leite Araújo',
     title: ptTitle,
     description: ptDescription,
-    images: [{ url: '/profile.jpg', width: 720, height: 1280, alt: 'Gabriel Leite Araújo' }],
+    images: [
+      {
+        url: '/og-pt.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Gabriel Leite Araújo · Software sob medida para empresas',
+      },
+    ],
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: ptTitle,
     description: ptDescription,
-    images: ['/profile.jpg'],
+    images: ['/og-pt.jpg'],
   },
 };
 
@@ -58,12 +65,19 @@ export const enMetadata: Metadata = {
     siteName: 'Gabriel Leite Araújo',
     title: enTitle,
     description: enDescription,
-    images: [{ url: '/profile.jpg', width: 720, height: 1280, alt: 'Gabriel Leite Araújo' }],
+    images: [
+      {
+        url: '/og-en.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Gabriel Leite Araújo · Senior .NET and React engineer',
+      },
+    ],
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: enTitle,
     description: enDescription,
-    images: ['/profile.jpg'],
+    images: ['/og-en.jpg'],
   },
 };
