@@ -11,7 +11,7 @@ export function generatePersonStructuredData(): StructuredDataPerson {
     name: 'Gabriel Leite Araújo',
     jobTitle: 'Full Stack Software Engineer',
     description:
-      'Full stack software engineer with 8+ years of experience in C#/.NET, React and PostgreSQL.',
+      'Desenvolvedor full stack com mais de 8 anos de experiência em C#/.NET, React e PostgreSQL. Software sob medida para pequenas e médias empresas.',
     url: 'https://frauchesgabriel.work',
     image: 'https://frauchesgabriel.work/profile.jpg',
     sameAs: [contactInfo.github, contactInfo.linkedin],

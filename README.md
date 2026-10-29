@@ -20,19 +20,12 @@ npm start        # Servidor de produção
 npm run lint     # Checar código
 ```
 
-## 🎨 Personalizar
+## Personalizar
 
-### Seus Dados
-
-- **Projetos**: `src/data/projects/projects.data.ts`
-- **Skills**: `src/data/skills/skills.data.ts`
-- **Traduções**: `src/i18n/translations.ts`
+- **Textos (PT e EN)**: `src/content/site.ts`
 - **Contato**: `src/config/contact.ts`
-
-### Cores e Estilos
-
-- **Cores**: `src/styles/tokens/colors.ts`
-- **Tailwind Config**: `tailwind.config.js`
+- **Visual**: `DESIGN.md`, `tailwind.config.js` e `src/app/globals.css`
+- **Prints dos cases**: `public/cases/` (WebP 1280x800)
 
 ### Email (Formulário de Contato)
 
@@ -48,46 +41,32 @@ EMAIL_PASS=senha-da-caixa
 
 A mensagem chega na própria caixa `EMAIL_USER`, com o e-mail do visitante no Reply-To.
 
-## 💡 Recursos
+## Recursos
 
-- 🌓 Dark/Light mode (Alt + T)
-- 🌍 PT-BR / EN (Alt + L)
-- ⌨️ Atalhos de teclado
-- 📱 100% Responsivo
-- 🎨 Animações suaves
-- 📧 Formulário com validação
-- ♿ Acessível
+- Páginas estáticas em português (`/`) e inglês (`/en`), renderizadas no servidor
+- Tema claro e escuro
+- Formulário de contato por SMTP
 
-## 🛠️ Stack
+## Stack
 
-- Next.js 15
-- React 19
-- TypeScript
+- Next.js 15 (App Router, `output: 'standalone'` para o Coolify)
+- React 19 e TypeScript
 - Tailwind CSS
-- Framer Motion
+- Fonte Geist (pacote `geist`, sem depender do Google Fonts no build)
 
-## 📁 Estrutura
+## Estrutura
 
 ```
 src/
-├── app/              # Páginas e API
-├── components/       # Componentes React
-│   ├── sections/     # Seções da home
-│   ├── ui/           # Componentes base
-│   └── layout/       # Layout components
-├── data/             # Seus dados (projetos, skills)
-├── i18n/             # Traduções
-├── hooks/            # Custom hooks
-├── contexts/         # Contexts (tema, idioma)
-└── styles/           # Estilos e tokens
+├── app/              # Páginas (/ e /en), API de contato, sitemap e robots
+├── components/site/  # Página e componentes interativos (tema, menu, formulário)
+├── content/          # Textos em português e inglês
+├── config/           # Contato e e-mail
+└── lib/              # Validação, erros e dados estruturados (SEO)
 ```
 
-## 📞 Contato
+## Contato
 
-- [Portfolio](https://app.frauchesgabriel.work)
-- [LinkedIn](https://linkedin.com/in/gabrielaraujo)
+- [frauchesgabriel.work](https://frauchesgabriel.work)
+- [LinkedIn](https://www.linkedin.com/in/gabrielleitearaujo/)
 - [GitHub](https://github.com/gabrielLAraujo)
-
----
-
-Feito com ❤️ usando Next.js
