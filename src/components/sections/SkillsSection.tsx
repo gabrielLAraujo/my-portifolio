@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { categories, getSkillsByCategory, skills } from '@/data/skills/skills.data';
+import { categories, getSkillsByCategory } from '@/data/skills/skills.data';
 import { useState } from 'react';
 import { Code2, Server, Cloud, Wrench } from 'lucide-react';
 
@@ -20,24 +20,9 @@ const categoryColors = {
   other: 'accent-green',
 };
 
-const levelColors = {
-  expert: 'bg-accent-green',
-  advanced: 'bg-accent-purple',
-  intermediate: 'bg-accent-cyan',
-  beginner: 'bg-text-muted',
-};
-
-const levelWidths = {
-  expert: 'w-full',
-  advanced: 'w-3/4',
-  intermediate: 'w-1/2',
-  beginner: 'w-1/4',
-};
-
 export function SkillsSection() {
   const { t, language } = useLanguage();
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
 
   const container = {
     hidden: { opacity: 0 },
@@ -181,10 +166,7 @@ export function SkillsSection() {
                         border border-dark-border/30
                         hover:border-${color}/30
                         transition-all duration-300
-                        cursor-pointer
                       `}
-                      onMouseEnter={() => setHoveredSkill(skill.name)}
-                      onMouseLeave={() => setHoveredSkill(null)}
                     >
                       <div className="flex items-center gap-3">
                         <skill.icon className={`w-5 h-5 text-${color} flex-shrink-0`} />
@@ -192,41 +174,8 @@ export function SkillsSection() {
                           <span className="text-sm text-text-primary font-medium">
                             {skill.name}
                           </span>
-
-                          {/* Level Bar */}
-                          <div className="mt-1.5 h-1 rounded-full bg-dark-border/50 overflow-hidden">
-                            <motion.div
-                              className={`h-full rounded-full ${levelColors[(skill.level || 'intermediate') as keyof typeof levelColors]}`}
-                              initial={{ width: 0 }}
-                              whileInView={{
-                                width:
-                                  levelWidths[
-                                    (skill.level || 'intermediate') as keyof typeof levelWidths
-                                  ].replace('w-', '') === 'full'
-                                    ? '100%'
-                                    : levelWidths[
-                                        (skill.level || 'intermediate') as keyof typeof levelWidths
-                                      ].replace('w-', ''),
-                              }}
-                              viewport={{ once: true }}
-                              transition={{ duration: 0.8, delay: 0.2 }}
-                            />
-                          </div>
                         </div>
                       </div>
-
-                      {/* Skill Level Tooltip */}
-                      <motion.div
-                        initial={{ opacity: 0, y: 5 }}
-                        animate={{
-                          opacity: hoveredSkill === skill.name ? 1 : 0,
-                          y: hoveredSkill === skill.name ? 0 : 5,
-                        }}
-                        className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-bg-primary border border-dark-border/50 text-xs text-text-secondary whitespace-nowrap z-10"
-                      >
-                        {(skill.level || 'intermediate').charAt(0).toUpperCase() +
-                          (skill.level || 'intermediate').slice(1)}
-                      </motion.div>
                     </motion.div>
                   ))}
                 </motion.div>
@@ -239,33 +188,6 @@ export function SkillsSection() {
             );
           })}
         </div>
-
-        {/* Stats Summary */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-16 flex flex-wrap justify-center gap-8 md:gap-16"
-        >
-          {[
-            { value: skills.length, label: language === 'pt' ? 'Tecnologias' : 'Technologies' },
-            {
-              value: skills.filter((s) => s.level === 'expert').length,
-              label: language === 'pt' ? 'Expert' : 'Expert',
-            },
-            {
-              value: skills.filter((s) => s.level === 'advanced').length,
-              label: language === 'pt' ? 'Avançado' : 'Advanced',
-            },
-          ].map((stat, index) => (
-            <div key={index} className="text-center">
-              <div className="text-4xl font-display font-bold gradient-text-static mb-1">
-                {stat.value}+
-              </div>
-              <div className="text-sm text-text-secondary font-mono">{stat.label}</div>
-            </div>
-          ))}
-        </motion.div>
       </div>
     </section>
   );

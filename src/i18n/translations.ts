@@ -65,12 +65,12 @@ export const translations: Record<'pt' | 'en', Translations> = {
     viewLive: 'Ver projeto',
     aboutTitle: 'Olá, eu sou Gabriel Araújo',
     aboutDescription1:
-      'Sou um desenvolvedor Full Stack com forte expertise em backend, especializado em C#, .NET e PostgreSQL. Com mais de 7 anos de experiência, construo aplicações robustas e escaláveis.',
+      'Sou um desenvolvedor Full Stack com forte expertise em backend, especializado em C#, .NET e PostgreSQL. Com mais de 8 anos de experiência, construo aplicações robustas e escaláveis.',
     aboutDescription2:
       'Domino tecnologias de infraestrutura como Docker, AWS e Git, garantindo deploys confiáveis e ambientes bem estruturados. No frontend, trabalho com React, Next.js e TypeScript.',
     aboutDescription3:
       'Meu foco está em arquitetura de software, código limpo e soluções que realmente resolvem problemas de negócio. Sempre buscando aprender e evoluir.',
-    experience: '7+ anos de experiência',
+    experience: '8+ anos de experiência',
     education: 'Graduação em Ciência da Computação',
   },
   en: {
@@ -105,12 +105,12 @@ export const translations: Record<'pt' | 'en', Translations> = {
     viewLive: 'View project',
     aboutTitle: "Hi, I'm Gabriel Araújo",
     aboutDescription1:
-      "I'm a Full Stack developer with strong backend expertise, specialized in C#, .NET and PostgreSQL. With over 7 years of experience, I build robust and scalable applications.",
+      "I'm a Full Stack developer with strong backend expertise, specialized in C#, .NET and PostgreSQL. With over 8 years of experience, I build robust and scalable applications.",
     aboutDescription2:
       'I master infrastructure technologies like Docker, AWS and Git, ensuring reliable deployments and well-structured environments. On the frontend, I work with React, Next.js and TypeScript.',
     aboutDescription3:
       'My focus is on software architecture, clean code and solutions that truly solve business problems. Always looking to learn and evolve.',
-    experience: '7+ years of experience',
+    experience: '8+ years of experience',
     education: "Bachelor's in Computer Science",
   },
 };

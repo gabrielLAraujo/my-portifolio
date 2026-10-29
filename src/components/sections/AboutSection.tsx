@@ -16,7 +16,7 @@ function AnimatedCounter({
   duration?: number;
   suffix?: string;
 }) {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(end);
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true });
 
@@ -62,7 +62,7 @@ export function AboutSection() {
   const stats = [
     {
       icon: Briefcase,
-      value: 7,
+      value: 8,
       suffix: '+',
       label: language === 'pt' ? 'Anos de Experiência' : 'Years of Experience',
       color: 'accent-green',

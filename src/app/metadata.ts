@@ -1,72 +1,73 @@
-import { Metadata } from "next";
+import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
+const SITE_URL = 'https://frauchesgabriel.work';
+const TITLE = 'Gabriel Leite Araújo · Full Stack Software Engineer (.NET, React)';
+const DESCRIPTION =
+  'Full stack software engineer with 8+ years of experience in C#/.NET, React and PostgreSQL. Production systems with clean architecture, automated tests and Docker deploys.';
+
+const googleVerification = process.env.GOOGLE_SITE_VERIFICATION;
+
+export const siteMetadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Gabriel Leite Araujo - Full Stack Software Engineer",
-    template: "%s | Gabriel Araujo"
+    default: TITLE,
+    template: '%s | Gabriel Leite Araújo',
   },
-  description: "Full Stack Software Engineer especializado em React, Next.js, Node.js e TypeScript. Criando soluções web modernas e eficientes com foco em experiência do usuário.",
+  description: DESCRIPTION,
   keywords: [
-    "Gabriel Leite Araújo",
-    "Full Stack Software Engineer",
-    "Desenvolvedor Full Stack",
-    "Desenvolvedor Web",
-    "Desenvolvedor Frontend",
-    "Desenvolvedor Backend",
-    "Desenvolvedor Full Stack",
-    "Desenvolvedor Web",
-    "Desenvolvedor Frontend",
-    "Desenvolvedor Backend",
-    "Software Engineer",
-    "React",
-    "Next.js",
-    "TypeScript",
-    "Node.js",
-    "JavaScript",
-    "Frontend",
-    "Backend",
-    "Desenvolvedor Web",
-    "Portfolio",
-    "Programador"
+    'Gabriel Leite Araújo',
+    'Full Stack Software Engineer',
+    'Desenvolvedor Full Stack',
+    '.NET',
+    'C#',
+    'React',
+    'TypeScript',
+    'PostgreSQL',
+    'Docker',
+    'Software Architecture',
   ],
-  authors: [{ name: "Gabriel Leite Araújo" }],
-  creator: "Gabriel Leite Araújo",
-  publisher: "Gabriel Leite Araújo",
+  authors: [{ name: 'Gabriel Leite Araújo', url: SITE_URL }],
+  creator: 'Gabriel Leite Araújo',
   robots: {
     index: true,
     follow: true,
     googleBot: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   },
   openGraph: {
-    type: "website",
-    locale: "pt_BR",
-    url: "https://frauchesgabriel.work",
-    title: "Gabriel Leite Araújo - Full Stack Software Engineer",
-    description: "Full Stack Software Engineer especializado em React, Next.js, Node.js e TypeScript. Criando soluções web modernas e eficientes.",
-    siteName: "Gabriel Araujo Portfolio",
+    type: 'website',
+    locale: 'en_US',
+    alternateLocale: ['pt_BR'],
+    url: SITE_URL,
+    siteName: 'Gabriel Leite Araújo',
+    title: TITLE,
+    description: DESCRIPTION,
     images: [
       {
-        url: "/profile.jpg",
+        url: '/profile.jpg',
         width: 800,
         height: 800,
-        alt: "Gabriel Leite Araújo",
+        alt: 'Gabriel Leite Araújo',
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Gabriel Leite Araújo - Full Stack Software Engineer",
-    description: "Full Stack Software Engineer especializado em React, Next.js, Node.js e TypeScript.",
-    images: ["/profile.jpg"],
+    card: 'summary',
+    title: TITLE,
+    description: DESCRIPTION,
+    images: ['/profile.jpg'],
+  },
+  icons: {
+    apple: '/profile.jpg',
   },
   alternates: {
-    canonical: "https://frauchesgabriel.work",
+    canonical: '/',
   },
-  category: "technology",
-}; 
+  category: 'technology',
+  ...(googleVerification ? { verification: { google: googleVerification } } : {}),
+};

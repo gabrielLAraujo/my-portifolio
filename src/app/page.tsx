@@ -14,8 +14,6 @@ import { CustomCursor } from '@/components/CustomCursor';
 import { contactInfo } from '@/config/contact';
 import { useKeyboardNavigation } from '@/hooks/useKeyboardNavigation';
 import { useToast } from '@/hooks/useToast';
-import { getStructuredDataScript } from '@/lib/seo/structured-data';
-import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 import {
@@ -164,20 +162,11 @@ const ContactSection = dynamic(
 export default function Home() {
   useKeyboardNavigation();
   const { toasts, removeToast } = useToast();
-  const structuredDataScript = getStructuredDataScript();
 
   return (
     <ErrorBoundary>
       <SmoothScroll>
         <PreloadResources />
-        <Head>
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: structuredDataScript,
-            }}
-          />
-        </Head>
 
         <SkipLinks />
         <ToastContainer toasts={toasts} onClose={removeToast} position="top-right" />
@@ -274,6 +263,7 @@ export default function Home() {
                 linkedinUrl={contactInfo.linkedin}
                 email={contactInfo.email}
                 phone={contactInfo.phone}
+                location={contactInfo.location}
               />
             </Suspense>
           </section>

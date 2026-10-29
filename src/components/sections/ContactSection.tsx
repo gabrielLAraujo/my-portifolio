@@ -23,6 +23,7 @@ interface ContactSectionProps {
   linkedinUrl: string;
   email: string;
   phone: string;
+  location: string;
 }
 
 interface FormData {
@@ -181,7 +182,13 @@ function FloatingTextarea({
   );
 }
 
-export function ContactSection({ githubUrl, linkedinUrl, email, phone }: ContactSectionProps) {
+export function ContactSection({
+  githubUrl,
+  linkedinUrl,
+  email,
+  phone,
+  location,
+}: ContactSectionProps) {
   const { t, language } = useLanguage();
   const { showSuccess } = useToast();
   const { handleAsyncError } = useErrorHandler();
@@ -371,7 +378,7 @@ export function ContactSection({ githubUrl, linkedinUrl, email, phone }: Contact
               <div className="p-2 rounded-lg bg-accent-purple/10">
                 <MapPin className="w-5 h-5 text-accent-purple" />
               </div>
-              <span>São Paulo, Brasil</span>
+              <span>{location}</span>
             </div>
 
             {/* Social Links */}

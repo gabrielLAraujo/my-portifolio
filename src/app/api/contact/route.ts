@@ -37,6 +37,7 @@ export async function POST(request: Request) {
     // Send email
     await transporter.sendMail({
       ...mailOptions,
+      replyTo: email,
       subject: `Contato do Portfólio - ${name}`,
       text: `Nome: ${name}\nEmail: ${email}\nMensagem: ${message}`,
       html: `
