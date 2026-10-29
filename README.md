@@ -36,14 +36,17 @@ npm run lint     # Checar código
 
 ### Email (Formulário de Contato)
 
-Crie `.env.local` na raiz do projeto:
+O formulário envia por SMTP, por padrão o da Hostinger (`smtp.hostinger.com`, porta 465). Crie `.env.local` na raiz do projeto:
 
 ```env
-EMAIL_USER=seu-email@exemplo.com
-EMAIL_PASS=sua-senha-de-app-aqui
+EMAIL_USER=caixa@seu-dominio.com
+EMAIL_PASS=senha-da-caixa
+# Opcional, para outro provedor:
+# EMAIL_HOST=smtp.exemplo.com
+# EMAIL_PORT=587
 ```
 
-**Nota:** Use senhas de aplicativo, não sua senha principal.
+A mensagem chega na própria caixa `EMAIL_USER`, com o e-mail do visitante no Reply-To.
 
 ## 💡 Recursos
 
